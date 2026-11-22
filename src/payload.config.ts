@@ -1,4 +1,7 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { de } from '@payloadcms/translations/languages/de'
 import path from 'path'
@@ -6,13 +9,36 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Pages } from './collections/Pages'
+import { Services } from './collections/Services'
+import { Testimonials } from './collections/Testimonials'
+import { Users } from './collections/Users'
+import { Navigation } from './globals/Navigation'
+import { Settings } from './globals/Settings'
+import { Theme } from './globals/Theme'
+import { seed } from './seed'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const serverURL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+
+/** Without SMTP settings Payload logs e-mails to the console instead of sending them. */
+const email = process.env.SMTP_HOST
+  ? nodemailerAdapter({
+      defaultFromAddress: process.env.SMTP_FROM || 'noreply@golden-care.ch',
+      defaultFromName: 'Golden Care',
+      transportOptions: {
+        host: process.env.SMTP_HOST,
+        port: Number(process.env.SMTP_PORT || 587),
+        secure: Number(process.env.SMTP_PORT) === 465,
+        auth: process.env.SMTP_USER
+          ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
+          : undefined,
+      },
+    })
+  : undefined
 
 export default buildConfig({
   serverURL,
@@ -24,15 +50,27 @@ export default buildConfig({
     meta: {
       titleSuffix: ' – Golden Care',
     },
+    components: {
+      beforeDashboard: ['@/components/admin/SeedButton#SeedButton'],
+    },
+    livePreview: {
+      breakpoints: [
+        { label: 'Mobil', name: 'mobile', width: 390, height: 844 },
+        { label: 'Tablet', name: 'tablet', width: 820, height: 1180 },
+        { label: 'Desktop', name: 'desktop', width: 1440, height: 900 },
+      ],
+    },
   },
   i18n: {
     supportedLanguages: { de },
     fallbackLanguage: 'de',
   },
-  collections: [Users, Media],
+  collections: [Pages, Services, Testimonials, Media, Users],
+  globals: [Settings, Navigation, Theme],
   cors: [serverURL],
   csrf: [serverURL],
   editor: lexicalEditor(),
+  email,
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -41,5 +79,52 @@ export default buildConfig({
     url: process.env.DATABASE_URL || '',
   }),
   sharp,
-  plugins: [],
+  endpoints: [
+    {
+      path: '/seed',
+      method: 'post',
+      handler: async (req) => {
+        if (!req.user) {
+          return Response.json({ message: 'Nicht angemeldet' }, { status: 401 })
+        }
+        try {
+          const force = req.searchParams.get('force') === 'true'
+          const result = await seed({ payload: req.payload, force })
+          return Response.json(result)
+        } catch (error) {
+          req.payload.logger.error({ err: error, msg: 'Seed fehlgeschlagen' })
+          return Response.json(
+            { message: error instanceof Error ? error.message : 'Seed fehlgeschlagen' },
+            { status: 500 },
+          )
+        }
+      },
+    },
+  ],
+  plugins: [
+    formBuilderPlugin({
+      fields: {
+        payment: false,
+        country: false,
+        state: false,
+        date: false,
+        number: false,
+      },
+      defaultToEmail: process.env.CONTACT_EMAIL,
+      formOverrides: {
+        labels: { singular: 'Formular', plural: 'Formulare' },
+        admin: { group: 'Formulare' },
+      },
+      formSubmissionOverrides: {
+        labels: { singular: 'Einsendung', plural: 'Einsendungen' },
+        admin: { group: 'Formulare' },
+      },
+    }),
+    seoPlugin({
+      collections: ['pages'],
+      uploadsCollection: 'media',
+      generateTitle: ({ doc }) => (doc?.title ? `${doc.title} – Golden Care` : 'Golden Care'),
+      generateURL: ({ doc }) => `${serverURL}/${doc?.slug === 'home' ? '' : (doc?.slug ?? '')}`,
+    }),
+  ],
 })

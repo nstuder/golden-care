@@ -1,26 +1,109 @@
 @import 'tailwindcss';
 
-@theme {
-  --color-golden-50: #fdf8ec;
-  --color-golden-100: #f9edcc;
-  --color-golden-200: #f2d995;
-  --color-golden-300: #ebc15d;
-  --color-golden-400: #e4aa36;
-  --color-golden-500: #d48c20;
-  --color-golden-600: #bb6b19;
-  --color-golden-700: #9b4d18;
-  --color-golden-800: #7f3d1a;
-  --color-golden-900: #693318;
+/*
+ * Theme defaults. The root layout overrides these with the values from the
+ * "Design" global in the CMS (see src/lib/theme.ts → buildThemeCss).
+ */
+:root {
+  --theme-primary: #c9a54c;
+  --theme-secondary: #2a1638;
+  --theme-background: #fbf8f3;
+  --theme-foreground: #22162b;
+  --theme-font-heading: var(--font-fraunces);
+  --theme-radius: 1rem;
+}
 
-  --color-ink: #2b2118;
-  --color-cream: #fffaf2;
+/* Shades are derived from the base colours, so the CMS only needs four colours. */
+@theme inline {
+  --color-primary-50: color-mix(in oklab, var(--theme-primary) 10%, white);
+  --color-primary-100: color-mix(in oklab, var(--theme-primary) 20%, white);
+  --color-primary-200: color-mix(in oklab, var(--theme-primary) 40%, white);
+  --color-primary-300: color-mix(in oklab, var(--theme-primary) 65%, white);
+  --color-primary-400: color-mix(in oklab, var(--theme-primary) 85%, white);
+  --color-primary-500: var(--theme-primary);
+  --color-primary-600: color-mix(in oklab, var(--theme-primary) 85%, black);
+  --color-primary-700: color-mix(in oklab, var(--theme-primary) 68%, black);
+  --color-primary-800: color-mix(in oklab, var(--theme-primary) 50%, black);
+  --color-primary-900: color-mix(in oklab, var(--theme-primary) 35%, black);
+
+  --color-secondary-50: color-mix(in oklab, var(--theme-secondary) 6%, white);
+  --color-secondary-100: color-mix(in oklab, var(--theme-secondary) 12%, white);
+  --color-secondary-200: color-mix(in oklab, var(--theme-secondary) 25%, white);
+  --color-secondary-300: color-mix(in oklab, var(--theme-secondary) 45%, white);
+  --color-secondary-400: color-mix(in oklab, var(--theme-secondary) 65%, white);
+  --color-secondary-500: color-mix(in oklab, var(--theme-secondary) 82%, white);
+  --color-secondary-600: color-mix(in oklab, var(--theme-secondary) 92%, white);
+  --color-secondary-700: var(--theme-secondary);
+  --color-secondary-800: color-mix(in oklab, var(--theme-secondary) 85%, black);
+  --color-secondary-900: color-mix(in oklab, var(--theme-secondary) 70%, black);
+
+  --color-background: var(--theme-background);
+  --color-foreground: var(--theme-foreground);
+  --color-muted: color-mix(in oklab, var(--theme-foreground) 70%, var(--theme-background));
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-display: var(--theme-font-heading), ui-serif, Georgia, serif;
+
+  --radius-theme: var(--theme-radius);
+  --radius-theme-sm: calc(var(--theme-radius) / 2);
 }
 
 @layer base {
   html {
-    @apply bg-cream text-ink antialiased;
+    @apply scroll-smooth bg-background text-foreground antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary-500;
+  }
+
+  ::selection {
+    @apply bg-primary-300 text-secondary-900;
+  }
+}
+
+@layer components {
+  /* Typography for rich text from the CMS */
+  .prose-content {
+    @apply space-y-4 text-lg leading-relaxed text-muted;
+
+    & h2 {
+      @apply pt-4 font-display text-3xl font-semibold text-foreground;
+    }
+    & h3 {
+      @apply pt-2 font-display text-2xl font-semibold text-foreground;
+    }
+    & h4 {
+      @apply font-display text-xl font-semibold text-foreground;
+    }
+    & a {
+      @apply font-medium text-primary-700 underline decoration-primary-300 underline-offset-4 hover:decoration-primary-600;
+    }
+    & ul {
+      @apply list-disc space-y-1 pl-6;
+    }
+    & ol {
+      @apply list-decimal space-y-1 pl-6;
+    }
+    & strong {
+      @apply font-semibold text-foreground;
+    }
+    & blockquote {
+      @apply border-l-4 border-primary-400 pl-4 font-display text-xl text-foreground italic;
+    }
+  }
+
+  .prose-invert {
+    @apply text-secondary-100;
+
+    & h2,
+    & h3,
+    & h4,
+    & strong {
+      @apply text-white;
+    }
+    & a {
+      @apply text-primary-300;
+    }
   }
 }

@@ -1,12 +1,13 @@
-import { Heading } from '@/components/atoms'
-import { BaseTemplate } from '@/components/templates'
+import type { Metadata } from 'next'
+
+import { PageView, pageMetadata } from './PageView'
+
+export const dynamic = 'force-dynamic'
+
+export function generateMetadata(): Promise<Metadata> {
+  return pageMetadata()
+}
 
 export default function HomePage() {
-  return (
-    <BaseTemplate className="items-center justify-center">
-      <Heading level={1} className="text-golden-700">
-        Golden Care
-      </Heading>
-    </BaseTemplate>
-  )
+  return <PageView />
 }
