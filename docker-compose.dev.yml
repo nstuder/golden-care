@@ -1,0 +1,17 @@
+# Local development: only MongoDB runs in Docker, the app runs with `pnpm dev`.
+#   pnpm db:up    -> start MongoDB on localhost:27018
+#   pnpm db:down  -> stop it (data stays in the named volume)
+services:
+  golden-care-mongo:
+    container_name: golden-care-mongo-dev
+    image: mongo:4.4
+    restart: unless-stopped
+    command:
+      - --storageEngine=wiredTiger
+    ports:
+      - '27018:27017'
+    volumes:
+      - golden-care-mongo-dev:/data/db
+
+volumes:
+  golden-care-mongo-dev:

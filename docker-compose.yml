@@ -1,0 +1,56 @@
+# Production setup on the server (used by deploy/deploy-playbook.yml).
+# Requires a .env file next to this file (see .env.example) and the external `traefik` network.
+services:
+  golden-care-cms:
+    container_name: golden-care-cms
+    image: golden-care-payload-cms
+    build: .
+    restart: always
+    volumes:
+      - golden-care-media:/app/media
+    depends_on:
+      - golden-care-mongo
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=traefik'
+      - 'traefik.http.routers.golden-care.rule=Host(`golden-care.niklas-studer.com`)'
+      - 'traefik.http.routers.golden-care.entrypoints=web, websecure'
+      - 'traefik.http.routers.golden-care.tls=true'
+      - 'traefik.http.routers.golden-care.tls.certresolver=myresolver'
+      - 'traefik.http.routers.golden-care.middlewares=golden-care-compress'
+      - 'traefik.http.middlewares.golden-care-compress.compress=true'
+      - 'traefik.http.services.golden-care.loadbalancer.server.port=3000'
+    networks:
+      - golden-care_network
+      - traefik
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: 'mongodb://${MONGO_USERNAME}:${MONGO_PASSWORD}@golden-care-mongo:27017/${MONGO_DATABASE}?authSource=admin'
+      NEXT_PUBLIC_SERVER_URL: 'https://golden-care.niklas-studer.com'
+
+  golden-care-mongo:
+    container_name: golden-care-mongo
+    image: mongo:4.4
+    restart: always
+    command:
+      - --storageEngine=wiredTiger
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: '${MONGO_USERNAME}'
+      MONGO_INITDB_ROOT_PASSWORD: '${MONGO_PASSWORD}'
+      MONGO_INITDB_DATABASE: '${MONGO_DATABASE}'
+    volumes:
+      - ./db-data:/data/db
+    networks:
+      - golden-care_network
+
+volumes:
+  # Named volume so uploads are owned by the app user from the image
+  golden-care-media:
+
+networks:
+  traefik:
+    external: true
+  golden-care_network:
+    driver: bridge
+    internal: true

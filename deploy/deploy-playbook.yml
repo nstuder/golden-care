@@ -1,0 +1,28 @@
+- name: deploy golden-care
+  hosts: servers
+  gather_facts: no
+  vars:
+    app_dir: /home/nstuder/golden-care
+  tasks:
+    - name: Update Git branch
+      ansible.builtin.git:
+        repo: git@github.com:nstuder/golden-care.git
+        dest: '{{ app_dir }}'
+        version: main
+        update: yes
+
+    - name: Check that the .env file exists on the server
+      ansible.builtin.stat:
+        path: '{{ app_dir }}/.env'
+      register: env_file
+
+    - name: Fail if .env is missing
+      ansible.builtin.fail:
+        msg: 'Missing {{ app_dir }}/.env – copy .env.example and fill in the production values first.'
+      when: not env_file.stat.exists
+
+    - name: Create and start services
+      community.docker.docker_compose_v2:
+        project_src: '{{ app_dir }}'
+        build: always
+      register: output

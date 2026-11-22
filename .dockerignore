@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+.git
+.idea
+.next
+node_modules
+media
+db-data
+deploy
