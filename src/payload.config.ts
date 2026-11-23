@@ -17,7 +17,15 @@ import { Users } from './collections/Users'
 import { Navigation } from './globals/Navigation'
 import { Settings } from './globals/Settings'
 import { Theme } from './globals/Theme'
+import { pathForSlug } from './lib/links'
+import { truncate } from './lib/seo/metadata'
+import { migrations } from './migrations'
+import { revalidatePlugin } from './plugins/revalidate'
 import { seed } from './seed'
+
+type HeroLike = { blockType?: string; text?: string | null; image?: string | { id: string } | null }
+const heroBlock = (doc: { layout?: HeroLike[] | null } | undefined) =>
+  doc?.layout?.find((block) => block.blockType === 'hero')
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -77,6 +85,8 @@ export default buildConfig({
   },
   db: mongooseAdapter({
     url: process.env.DATABASE_URL || '',
+    // Data migrations run automatically when the production server starts
+    prodMigrations: migrations,
   }),
   sharp,
   endpoints: [
@@ -123,8 +133,26 @@ export default buildConfig({
     seoPlugin({
       collections: ['pages'],
       uploadsCollection: 'media',
+      tabbedUI: false,
       generateTitle: ({ doc }) => (doc?.title ? `${doc.title} – Golden Care` : 'Golden Care'),
-      generateURL: ({ doc }) => `${serverURL}/${doc?.slug === 'home' ? '' : (doc?.slug ?? '')}`,
+      // Suggestions for the "Generieren" buttons, taken from the first hero section
+      generateDescription: ({ doc }) => truncate(heroBlock(doc)?.text ?? ''),
+      generateImage: ({ doc }) => {
+        const image = heroBlock(doc)?.image
+        return (typeof image === 'object' && image ? image.id : image) ?? ''
+      },
+      generateURL: ({ doc }) => `${serverURL}${pathForSlug(doc?.slug)}`,
+      fields: ({ defaultFields }) => [
+        ...defaultFields,
+        {
+          name: 'noIndex',
+          label: 'Nicht in Suchmaschinen anzeigen (noindex)',
+          type: 'checkbox',
+          admin: { description: 'Seite wird aus Sitemap und Suchergebnissen ausgeschlossen.' },
+        },
+      ],
     }),
+    // Must stay last, so it also sees the collections added by other plugins
+    revalidatePlugin(),
   ],
 })

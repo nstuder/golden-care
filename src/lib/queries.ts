@@ -62,7 +62,7 @@ export const getPublishedSlugs = cache(async () => {
   const result = await payload.find({
     collection: 'pages',
     where: { _status: { equals: 'published' } },
-    select: { slug: true, updatedAt: true },
+    select: { slug: true, updatedAt: true, meta: { noIndex: true } },
     depth: 0,
     pagination: false,
   })

@@ -168,6 +168,10 @@ export interface Page {
      * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
      */
     image?: (string | null) | Media;
+    /**
+     * Seite wird aus Sitemap und Suchergebnissen ausgeschlossen.
+     */
+    noIndex?: boolean | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -842,6 +846,7 @@ export interface PagesSelect<T extends boolean = true> {
         title?: T;
         description?: T;
         image?: T;
+        noIndex?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1338,14 +1343,43 @@ export interface Setting {
         id?: string | null;
       }[]
     | null;
-  openingHours?:
+  /**
+   * Pro Zeile Wochentage mit gleichen Zeiten. Nicht aufgeführte Tage werden als „geschlossen“ angezeigt. Wird auch für Google (strukturierte Daten) verwendet.
+   */
+  schedule?:
     | {
-        days: string;
-        hours: string;
+        days: ('mo' | 'tu' | 'we' | 'th' | 'fr' | 'sa' | 'su')[];
+        opens: string;
+        closes: string;
         id?: string | null;
       }[]
     | null;
   appointmentNote?: string | null;
+  businessType?: ('LocalBusiness' | 'PetStore' | 'VeterinaryCare') | null;
+  /**
+   * Für Google und Social-Media-Vorschauen, wenn eine Seite kein eigenes Bild hat.
+   */
+  image?: (string | null) | Media;
+  region?: string | null;
+  country?: string | null;
+  latitude?: number | null;
+  /**
+   * In Google Maps: Rechtsklick auf den Salon → Koordinaten kopieren
+   */
+  longitude?: number | null;
+  /**
+   * Orte, aus denen Kundschaft kommt – hilft bei der lokalen Suche.
+   */
+  areaServed?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Optional, z.B. „$$“ oder „CHF 60–150“
+   */
+  priceRange?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1454,14 +1488,28 @@ export interface SettingsSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
-  openingHours?:
+  schedule?:
     | T
     | {
         days?: T;
-        hours?: T;
+        opens?: T;
+        closes?: T;
         id?: T;
       };
   appointmentNote?: T;
+  businessType?: T;
+  image?: T;
+  region?: T;
+  country?: T;
+  latitude?: T;
+  longitude?: T;
+  areaServed?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  priceRange?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

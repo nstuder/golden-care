@@ -9,10 +9,13 @@ describe('site info', () => {
     const site = toSiteInfo({
       name: ' Golden Care ',
       phone: '',
-      openingHours: [
-        { days: 'Mo', hours: '9–12' },
-        { days: 'Di', hours: null },
+      schedule: [
+        { days: ['mo'], opens: '09:00', closes: '12:00' },
+        { days: ['tu'], opens: '9 Uhr', closes: '12:00' },
       ],
+      latitude: 46.9,
+      longitude: 'x',
+      areaServed: [{ name: 'Bern' }, { name: '' }],
       socials: [
         { platform: 'instagram', url: 'https://instagram.com/x' },
         { platform: null, url: 'x' },
@@ -20,7 +23,15 @@ describe('site info', () => {
     })
     expect(site.name).toBe('Golden Care')
     expect(site.phone).toBeNull()
-    expect(site.openingHours).toEqual([{ days: 'Mo', hours: '9–12' }])
+    expect(site.schedule).toEqual([{ days: ['mo'], opens: '09:00', closes: '12:00' }])
+    expect(site.openingHours).toEqual([
+      { days: 'Montag', hours: '09:00 – 12:00' },
+      { days: 'Dienstag – Sonntag', hours: 'geschlossen' },
+    ])
+    expect(site.country).toBe('CH')
+    expect(site.latitude).toBe(46.9)
+    expect(site.longitude).toBeNull()
+    expect(site.areaServed).toEqual(['Bern'])
     expect(site.socials).toEqual([{ platform: 'instagram', url: 'https://instagram.com/x' }])
   })
 

@@ -129,8 +129,25 @@ Organisms sind rein präsentational (Props rein, kein Payload‑Zugriff) → ein
 ## 9. SEO & Qualität
 
 - `@payloadcms/plugin-seo` für Meta‑Titel/Beschreibung/Bild pro Seite, `generateMetadata`.
-- `sitemap.ts`, `robots.ts` (Indexierung erst mit `ALLOW_INDEXING=true`), PetGroomer‑JSON‑LD (Name, Adresse, Öffnungszeiten aus „Einstellungen“).
+- `sitemap.ts`, `robots.ts` (Indexierung erst mit `ALLOW_INDEXING=true`), JSON‑LD – siehe 9b (Name, Adresse, Öffnungszeiten aus „Einstellungen“).
 - Barrierefreiheit: semantische Landmarks, Fokus‑Stile, Kontrast Gold/Violett geprüft, Skip‑Link.
+
+## 9b. Lokale SEO & strukturierte Daten (Erweiterung)
+
+- [x] Öffnungszeiten strukturiert (Wochentage + Öffnet/Schliesst), Anzeige inkl. „geschlossen“ automatisch
+- [x] Migration der bisherigen Freitext-Öffnungszeiten (`src/migrations`, läuft beim Start in Produktion)
+- [x] Einstellungen → Tab „SEO & Google“: Unternehmenstyp, Standardbild, Region, Land, Koordinaten, Einzugsgebiet, Preisniveau
+- [x] JSON-LD-Graph: LocalBusiness (+ OfferCatalog aus Leistungen), WebSite, WebPage/ContactPage/CollectionPage, BreadcrumbList, FAQPage
+- [x] Metadaten pro Seite mit Fallbacks, Canonical, Open Graph/Twitter, `noindex`-Option, `lang="de-CH"`, Theme-Farbe
+- [x] Sitemap mit Prioritäten (ohne noindex-Seiten), Favicon, Apple-Icon, Logo, Web-Manifest
+- [x] Tests für alle Builder und Hilfsfunktionen
+- [ ] Echte Koordinaten/Region eintragen, Google-Unternehmensprofil & Search Console (nach Go-live)
+
+## 9c. Logo & Caching (Erweiterung)
+
+- [x] Logo nach Vorlage der Kundin: Golden Retriever im Trab, Lorbeerzweige, goldener Pinselring, Marcellus-Schrift (Vektor, `src/components/atoms/Logo`)
+- [x] Header-Logo (Hund + Wortmarke), rundes Logo im Footer, Favicon, Apple-Icon, `public/logo.png`
+- [x] ISR: Seiten werden beim ersten Aufruf gerendert und gecacht, Änderungen im CMS erneuern den Cache sofort (`src/plugins/revalidate.ts`)
 
 ## 10. Umsetzungsschritte
 
@@ -145,11 +162,12 @@ Organisms sind rein präsentational (Props rein, kein Payload‑Zugriff) → ein
 9. [x] Tests
 10. [x] Typecheck, Lint, Build, Smoke‑Test lokal
 11. [x] `.env.example`/README ergänzen
-12. [ ] Deploy (offen – nach Review)
+12. [x] Deploy auf golden-care.niklas-studer.com (22.11.2026), Beispielinhalte geladen
 
 ## 11. Später / offen
 
 - Echte Stammdaten, Logo, Fotos und Texte
 - SMTP‑Zugang für Formular‑Mails
 - Impressum/Datenschutz juristisch korrekt befüllen
+- Go-live: `ALLOW_INDEXING=true` in der Server-`.env` setzen und neu deployen
 - Optional: Online‑Terminbuchung, Google‑Bewertungen, Instagram‑Feed

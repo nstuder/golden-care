@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { Container, Logo, Text } from '@/components/atoms'
+import { Container, LogoBadge, Text } from '@/components/atoms'
 import { ContactItem, OpeningHours, SocialLinks } from '@/components/molecules'
 import { telHref, whatsappHref, type ResolvedLink } from '@/lib/links'
 import { formatAddress, mapsHref, type SiteInfo } from '@/lib/site'
@@ -23,7 +23,7 @@ export function Footer({ site, links = [], year = new Date().getFullYear() }: Fo
       />
       <Container width="wide" className="grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div className="flex flex-col gap-4 lg:col-span-1">
-          <Logo name={site.name} tagline={site.tagline} inverted />
+          <LogoBadge name={site.name} tagline={site.tagline} inverted className="size-52" />
           {site.description ? <Text tone="inverted">{site.description}</Text> : null}
           <SocialLinks links={site.socials} />
         </div>

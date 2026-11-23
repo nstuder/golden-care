@@ -42,6 +42,7 @@
   --color-muted: color-mix(in oklab, var(--theme-foreground) 70%, var(--theme-background));
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-logo: var(--font-marcellus), ui-serif, Georgia, serif;
   --font-display: var(--theme-font-heading), ui-serif, Georgia, serif;
 
   --radius-theme: var(--theme-radius);

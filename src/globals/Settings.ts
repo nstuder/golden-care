@@ -1,6 +1,17 @@
 import type { GlobalConfig } from 'payload'
 
 import { anyone, authenticated } from '@/access'
+import { isValidTime, weekdays } from '@/lib/hours'
+import { businessTypes } from '@/lib/seo/jsonLd'
+
+const timeField = (name: string, label: string) => ({
+  name,
+  label,
+  type: 'text' as const,
+  required: true,
+  validate: (value: unknown) =>
+    isValidTime(value) ? true : 'Bitte im Format HH:MM eingeben, z.B. 08:30',
+})
 
 export const Settings: GlobalConfig = {
   slug: 'settings',
@@ -98,27 +109,33 @@ export const Settings: GlobalConfig = {
           label: 'Öffnungszeiten',
           fields: [
             {
-              name: 'openingHours',
+              name: 'schedule',
               label: 'Öffnungszeiten',
               type: 'array',
               labels: { singular: 'Zeile', plural: 'Zeilen' },
+              admin: {
+                description:
+                  'Pro Zeile Wochentage mit gleichen Zeiten. Nicht aufgeführte Tage werden als „geschlossen“ angezeigt. Wird auch für Google (strukturierte Daten) verwendet.',
+              },
               fields: [
+                {
+                  name: 'days',
+                  label: 'Tage',
+                  type: 'select',
+                  hasMany: true,
+                  required: true,
+                  options: weekdays.map(({ label, value }) => ({ label, value })),
+                },
                 {
                   type: 'row',
                   fields: [
                     {
-                      name: 'days',
-                      label: 'Tage',
-                      type: 'text',
-                      required: true,
-                      admin: { width: '50%' },
+                      ...timeField('opens', 'Öffnet'),
+                      admin: { width: '50%', placeholder: '08:30' },
                     },
                     {
-                      name: 'hours',
-                      label: 'Zeiten',
-                      type: 'text',
-                      required: true,
-                      admin: { width: '50%' },
+                      ...timeField('closes', 'Schliesst'),
+                      admin: { width: '50%', placeholder: '18:00' },
                     },
                   ],
                 },
@@ -129,6 +146,90 @@ export const Settings: GlobalConfig = {
               label: 'Hinweis',
               type: 'text',
               defaultValue: 'Termine nur nach Vereinbarung',
+            },
+          ],
+        },
+        {
+          label: 'SEO & Google',
+          description:
+            'Angaben für Suchmaschinen und Google Maps (strukturierte Daten nach schema.org). Am besten identisch mit dem Google-Unternehmensprofil.',
+          fields: [
+            {
+              name: 'businessType',
+              label: 'Unternehmenstyp',
+              type: 'select',
+              defaultValue: 'LocalBusiness',
+              options: businessTypes.map(({ label, value }) => ({ label, value })),
+            },
+            {
+              name: 'image',
+              label: 'Standardbild',
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                description:
+                  'Für Google und Social-Media-Vorschauen, wenn eine Seite kein eigenes Bild hat.',
+              },
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'region',
+                  label: 'Kanton / Region',
+                  type: 'text',
+                  admin: { width: '50%', placeholder: 'z.B. BE' },
+                },
+                {
+                  name: 'country',
+                  label: 'Land (ISO-Code)',
+                  type: 'text',
+                  defaultValue: 'CH',
+                  admin: { width: '50%' },
+                },
+              ],
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'latitude',
+                  label: 'Breitengrad',
+                  type: 'number',
+                  min: -90,
+                  max: 90,
+                  admin: { width: '50%', step: 0.000001, placeholder: '46.948' },
+                },
+                {
+                  name: 'longitude',
+                  label: 'Längengrad',
+                  type: 'number',
+                  min: -180,
+                  max: 180,
+                  admin: {
+                    width: '50%',
+                    step: 0.000001,
+                    placeholder: '7.4474',
+                    description: 'In Google Maps: Rechtsklick auf den Salon → Koordinaten kopieren',
+                  },
+                },
+              ],
+            },
+            {
+              name: 'areaServed',
+              label: 'Einzugsgebiet',
+              type: 'array',
+              labels: { singular: 'Ort', plural: 'Orte' },
+              admin: {
+                description: 'Orte, aus denen Kundschaft kommt – hilft bei der lokalen Suche.',
+              },
+              fields: [{ name: 'name', label: 'Ort', type: 'text', required: true }],
+            },
+            {
+              name: 'priceRange',
+              label: 'Preisniveau',
+              type: 'text',
+              admin: { description: 'Optional, z.B. „$$“ oder „CHF 60–150“' },
             },
           ],
         },

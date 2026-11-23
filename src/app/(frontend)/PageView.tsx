@@ -3,9 +3,12 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { HOME_SLUG, pathForSlug } from '@/lib/links'
-import { toImage } from '@/lib/media'
+import { JsonLd } from '@/components/utils/JsonLd'
+import { allowIndexing, serverURL } from '@/lib/env'
+import { HOME_SLUG } from '@/lib/links'
 import { getPageBySlug, getServices, getSiteGlobals, getTestimonials } from '@/lib/queries'
+import { buildPageJsonLd } from '@/lib/seo/pageJsonLd'
+import { buildPageMetadata } from '@/lib/seo/metadata'
 import { toSiteInfo } from '@/lib/site'
 
 export async function PageView({ slug = HOME_SLUG }: { slug?: string }) {
@@ -21,29 +24,25 @@ export async function PageView({ slug = HOME_SLUG }: { slug?: string }) {
     blockTypes.has('servicesGrid') ? getServices() : Promise.resolve([]),
     blockTypes.has('testimonials') ? getTestimonials() : Promise.resolve([]),
   ])
+  const site = toSiteInfo(settings)
 
   return (
-    <RenderBlocks
-      blocks={page.layout}
-      context={{ site: toSiteInfo(settings), services, testimonials }}
-    />
+    <>
+      <JsonLd data={buildPageJsonLd({ page, site, baseUrl: serverURL })} />
+      <RenderBlocks blocks={page.layout} context={{ site, services, testimonials }} />
+    </>
   )
 }
 
 export async function pageMetadata(slug = HOME_SLUG): Promise<Metadata> {
-  const page = await getPageBySlug(slug)
+  const [page, { settings }] = await Promise.all([getPageBySlug(slug), getSiteGlobals()])
   if (!page) return {}
-  const image = toImage(page.meta?.image)
-  const title = page.meta?.title || (slug === HOME_SLUG ? undefined : page.title)
-
-  return {
-    ...(title
-      ? { title: { absolute: title.includes('Golden Care') ? title : `${title} – Golden Care` } }
-      : {}),
-    description: page.meta?.description ?? undefined,
-    alternates: { canonical: pathForSlug(slug) },
-    openGraph: image ? { images: [{ url: image.src, alt: image.alt }] } : undefined,
-  }
+  return buildPageMetadata({
+    page,
+    site: toSiteInfo(settings),
+    baseUrl: serverURL,
+    allowIndexing: allowIndexing(),
+  })
 }
 
 /** Shown before the first content exists (fresh installation). */

@@ -1,6 +1,9 @@
 import type { SocialLink } from '@/components/molecules/SocialLinks'
 import type { OpeningHoursEntry } from '@/components/molecules/OpeningHours'
 
+import { formatSchedule, normalizeSchedule, type ScheduleEntry } from './hours'
+import { toImage, type ImageData } from './media'
+
 /** Business details as used by the frontend (from the "Einstellungen" global). */
 export type SiteInfo = {
   name: string
@@ -10,13 +13,24 @@ export type SiteInfo = {
   street?: string | null
   zip?: string | null
   city?: string | null
+  region?: string | null
+  country?: string | null
+  latitude?: number | null
+  longitude?: number | null
   phone?: string | null
   whatsapp?: string | null
   email?: string | null
+  /** Structured opening hours (JSON-LD) */
+  schedule?: ScheduleEntry[] | null
+  /** Display rows derived from `schedule` */
   openingHours?: OpeningHoursEntry[] | null
   appointmentNote?: string | null
   socials?: SocialLink[] | null
   mapsUrl?: string | null
+  areaServed?: string[] | null
+  priceRange?: string | null
+  /** Default share image and business photo */
+  image?: ImageData | null
 }
 
 export const fallbackSite: SiteInfo = {
@@ -24,14 +38,19 @@ export const fallbackSite: SiteInfo = {
   tagline: 'Salon für Hundegesundheit und Fellpflege',
 }
 
-type SettingsLike = Partial<Record<keyof SiteInfo, unknown>> & {
-  openingHours?: { days?: string | null; hours?: string | null }[] | null
+type SettingsLike = Record<string, unknown> & {
+  schedule?: { days?: string[] | null; opens?: string | null; closes?: string | null }[] | null
   socials?: { platform?: string | null; url?: string | null }[] | null
+  areaServed?: { name?: string | null }[] | null
 }
 
-export function toSiteInfo(settings?: SettingsLike | null): SiteInfo {
-  if (!settings) return fallbackSite
+/** Accepts the "settings" global (or any partial object of it). */
+export function toSiteInfo(input?: object | null): SiteInfo {
+  if (!input) return fallbackSite
+  const settings = input as SettingsLike
   const str = (v: unknown) => (typeof v === 'string' && v.trim() ? v.trim() : null)
+  const num = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : null)
+  const schedule = normalizeSchedule(settings.schedule)
 
   return {
     name: str(settings.name) ?? fallbackSite.name,
@@ -41,17 +60,25 @@ export function toSiteInfo(settings?: SettingsLike | null): SiteInfo {
     street: str(settings.street),
     zip: str(settings.zip),
     city: str(settings.city),
+    region: str(settings.region),
+    country: str(settings.country) ?? 'CH',
+    latitude: num(settings.latitude),
+    longitude: num(settings.longitude),
     phone: str(settings.phone),
     whatsapp: str(settings.whatsapp),
     email: str(settings.email),
     appointmentNote: str(settings.appointmentNote),
     mapsUrl: str(settings.mapsUrl),
-    openingHours: (settings.openingHours ?? [])
-      .filter((e) => e?.days && e?.hours)
-      .map((e) => ({ days: e.days as string, hours: e.hours as string })),
+    priceRange: str(settings.priceRange),
+    schedule,
+    openingHours: formatSchedule(schedule),
+    areaServed: (settings.areaServed ?? [])
+      .map((a) => str(a?.name))
+      .filter((a): a is string => Boolean(a)),
     socials: (settings.socials ?? [])
       .filter((s) => s?.platform && s?.url)
       .map((s) => ({ platform: s.platform as string, url: s.url as string })),
+    image: toImage(settings.image, 'large'),
   }
 }
 

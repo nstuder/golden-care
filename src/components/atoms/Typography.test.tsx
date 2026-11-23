@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 
 import { Container } from './Container'
 import { Eyebrow } from './Eyebrow'
-import { Logo } from './Logo'
+import { Logo, LogoBadge, splitTagline } from './Logo'
 import { Section } from './Section'
 import { Text } from './Text'
 
@@ -29,8 +29,28 @@ describe('simple atoms', () => {
   })
 
   it('Logo shows name and tagline', () => {
-    render(<Logo name="Golden Care" tagline="Fellpflege" />)
-    expect(screen.getByText('Golden Care')).toBeInTheDocument()
+    const { container } = render(<Logo name="Golden Care" tagline="Fellpflege" />)
+    expect(container).toHaveTextContent('Golden Care')
+    expect(screen.getByText('Golden')).toHaveClass('text-primary-400')
     expect(screen.getByText('Fellpflege')).toBeInTheDocument()
+  })
+
+  it('LogoBadge is an accessible image with name and tagline', () => {
+    render(<LogoBadge name="Golden Care" tagline="Salon für Hundegesundheit und Fellpflege" />)
+    const badge = screen.getByRole('img', {
+      name: 'Golden Care – Salon für Hundegesundheit und Fellpflege',
+    })
+    expect(badge).toHaveTextContent('GOLDEN CARE')
+    expect(badge).toHaveTextContent('SALON FÜR HUNDEGESUNDHEIT')
+    expect(badge).toHaveTextContent('UND FELLPFLEGE')
+  })
+
+  it('splitTagline balances long taglines over two lines', () => {
+    expect(splitTagline('Fellpflege')).toEqual(['Fellpflege'])
+    expect(splitTagline('Salon für Hundegesundheit und Fellpflege')).toEqual([
+      'Salon für Hundegesundheit',
+      'und Fellpflege',
+    ])
+    expect(splitTagline('')).toEqual([])
   })
 })

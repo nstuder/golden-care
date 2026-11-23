@@ -42,7 +42,30 @@ Den Umsetzungsplan findest du in [`plan.md`](plan.md).
 die Live-Vorschau öffnen – Änderungen erscheinen sofort, veröffentlicht wird erst mit „Änderungen veröffentlichen“.
 Technisch: `/next/preview` aktiviert für eingeloggte Benutzer den Next.js Draft Mode.
 
+## SEO & strukturierte Daten
+
+- **JSON-LD (schema.org)** – `src/lib/seo/jsonLd.ts` baut einen verknüpften Graphen:
+  `LocalBusiness` (Adresse, Geo, Öffnungszeiten, Leistungen als `OfferCatalog`, Social Profile, Einzugsgebiet),
+  `WebSite`, pro Seite `WebPage`/`ContactPage`/`CollectionPage`, `BreadcrumbList` und `FAQPage` (aus FAQ-Abschnitten).
+  Prüfen mit dem [Rich Results Test](https://search.google.com/test/rich-results) oder dem [Schema Validator](https://validator.schema.org/).
+- **Metadaten** – `src/lib/seo/metadata.ts`: Titel, Beschreibung (SEO-Feld → Hero-Text → Einstellungen),
+  Canonical, Open Graph/Twitter-Bild (SEO-Bild → Hero-Bild → Standardbild), `lang="de-CH"`, Theme-Farbe.
+- **Pro Seite** im Bereich „SEO“: Titel, Beschreibung, Bild (mit „Generieren“-Vorschlägen) und „noindex“.
+- **Sitemap** (`/sitemap.xml`, ohne noindex-Seiten), **robots.txt**, Favicon/Apple-Icon, `logo.png`, Web-Manifest.
+- **Indexierung** erst mit `ALLOW_INDEXING=true` (robots.txt + `<meta name="robots">`).
+
+Für Google zusätzlich empfohlen: Google-Unternehmensprofil mit identischem Namen, Adresse und Telefonnummer (NAP),
+Search Console einrichten und die Sitemap einreichen.
+
+**Datenmigrationen** liegen in `src/migrations/` und laufen in Produktion beim Start automatisch (`prodMigrations`).
+
 **Bilder:** Die Beispielinhalte verwenden Platzhalterfotos von Unsplash. Einfach in „Medien“ ersetzen.
+
+## Caching (ISR)
+
+Alle Seiten laufen über `src/app/(frontend)/[[...slug]]/page.tsx` mit Incremental Static Regeneration: Eine Seite wird beim ersten Aufruf gerendert und danach aus dem Cache ausgeliefert (Header `x-nextjs-cache: HIT`). Beim Build wird nichts vorgerendert, weil der Docker-Build keine Datenbank hat.
+
+Sobald im CMS etwas veröffentlicht wird (Seiten, Leistungen, Kundenstimmen, Medien, Formulare, Einstellungen, Navigation, Design), leert `src/plugins/revalidate.ts` den Cache der ganzen Website. Zusätzlich wird jede Seite spätestens nach 24 Stunden neu gerendert. Die Live-Vorschau (Draft Mode) ist immer dynamisch.
 
 ## Tests
 

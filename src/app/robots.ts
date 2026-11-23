@@ -1,12 +1,12 @@
 import type { MetadataRoute } from 'next'
 
-export const dynamic = 'force-dynamic'
+import { allowIndexing, serverURL } from '@/lib/env'
 
-const serverURL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
+export const dynamic = 'force-dynamic'
 
 /** Indexing stays off until the site goes live (ALLOW_INDEXING=true). */
 export default function robots(): MetadataRoute.Robots {
-  if (process.env.ALLOW_INDEXING !== 'true') {
+  if (!allowIndexing()) {
     return { rules: { userAgent: '*', disallow: '/' } }
   }
   return {

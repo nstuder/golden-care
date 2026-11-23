@@ -603,14 +603,17 @@ export async function seed({
       street: placeholder.street,
       zip: placeholder.zip,
       city: placeholder.city,
-      openingHours: [
-        { days: 'Dienstag – Freitag', hours: '08:30 – 18:00' },
-        { days: 'Samstag', hours: '09:00 – 14:00' },
-        { days: 'Sonntag & Montag', hours: 'geschlossen' },
+      schedule: [
+        { days: ['tu', 'we', 'th', 'fr'], opens: '08:30', closes: '18:00' },
+        { days: ['sa'], opens: '09:00', closes: '14:00' },
       ],
       appointmentNote: 'Termine nur nach Vereinbarung',
       socials: [{ platform: 'instagram', url: 'https://www.instagram.com/' }],
-    },
+      businessType: 'LocalBusiness',
+      image: img.heroHome,
+      country: 'CH',
+      areaServed: [{ name: placeholder.city }, { name: 'Umgebung' }],
+    } as never,
   })
 
   await payload.updateGlobal({
