@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { setPathname } from '@/test/utils'
@@ -14,6 +14,10 @@ const props = {
   ],
   cta: { href: '/kontakt#form', label: 'Termin vereinbaren', newTab: false },
   phone: '+41 79 123 45 67',
+  hours: 'Di–Fr 08:30–18:00',
+  address: 'Musterstrasse 12, 1234 Musterort',
+  mapsHref: 'https://maps.example',
+  socials: [{ platform: 'instagram', url: 'https://instagram.com/x' }],
 }
 
 describe('Header', () => {
@@ -33,6 +37,28 @@ describe('Header', () => {
       'href',
       '/kontakt#form',
     )
+  })
+
+  it('shows opening hours, address and socials in the top bar', () => {
+    render(<Header {...props} />)
+    expect(screen.getByText('Di–Fr 08:30–18:00')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /Musterstrasse 12/ })).toHaveAttribute(
+      'href',
+      'https://maps.example',
+    )
+    expect(screen.getByRole('link', { name: 'Instagram' })).toHaveAttribute(
+      'href',
+      'https://instagram.com/x',
+    )
+  })
+
+  it('marks itself as scrolled', () => {
+    render(<Header {...props} />)
+    expect(screen.getByRole('banner')).not.toHaveAttribute('data-scrolled')
+    Object.defineProperty(window, 'scrollY', { value: 200, configurable: true })
+    fireEvent.scroll(window)
+    expect(screen.getByRole('banner')).toHaveAttribute('data-scrolled')
+    Object.defineProperty(window, 'scrollY', { value: 0, configurable: true })
   })
 
   it('has a skip link', () => {

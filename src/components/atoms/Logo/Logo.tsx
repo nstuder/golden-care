@@ -168,14 +168,25 @@ export type LogoProps = {
   tagline?: string | null
   inverted?: boolean
   className?: string
+  /** Extra classes for the retriever, e.g. to shrink it in the sticky header */
+  markClassName?: string
 }
 
 /** Horizontal lockup for the header: retriever + wordmark */
-export function Logo({ name = 'Golden Care', tagline, inverted, className }: LogoProps) {
+export function Logo({
+  name = 'Golden Care',
+  tagline,
+  inverted,
+  className,
+  markClassName,
+}: LogoProps) {
   const [first, rest] = splitName(name)
   return (
     <span className={cn('inline-flex items-center gap-3', className)}>
-      <LogoMark className="h-9 w-auto shrink-0" earColor={inverted ? '#2a1638' : '#fbf8f3'} />
+      <LogoMark
+        className={cn('h-9 w-auto shrink-0', markClassName)}
+        earColor={inverted ? '#2a1638' : '#fbf8f3'}
+      />
       <span className="flex flex-col leading-tight">
         <span className="font-logo text-xl tracking-wide whitespace-nowrap uppercase">
           <span className="text-primary-400">{first}</span>

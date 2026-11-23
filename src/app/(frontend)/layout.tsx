@@ -5,12 +5,13 @@ import type { ReactNode } from 'react'
 import { PreviewBanner } from '@/components/organisms'
 import { BaseTemplate } from '@/components/templates'
 import { JsonLd } from '@/components/utils/JsonLd'
+import { RevealObserver } from '@/components/utils/RevealObserver'
 import { LivePreviewListener } from '@/components/utils/LivePreviewListener'
 import { allowIndexing, serverURL } from '@/lib/env'
 import { resolveLink, resolveLinks } from '@/lib/links'
 import { getServices, getSiteGlobals, isDraftMode } from '@/lib/queries'
 import { buildGraph, buildLocalBusiness, buildWebSite } from '@/lib/seo/jsonLd'
-import { toSiteInfo } from '@/lib/site'
+import { formatAddress, mapsHref, toSiteInfo } from '@/lib/site'
 import { buildThemeCss, resolveTheme } from '@/lib/theme'
 
 import './globals.css'
@@ -81,13 +82,21 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html
       lang="de-CH"
+      // The inline script below adds `reveal-ready` before hydration
+      suppressHydrationWarning
       className={`${inter.variable} ${marcellus.variable} ${fraunces.variable} ${playfair.variable} ${cormorant.variable}`}
     >
       <head>
         <style id="theme" dangerouslySetInnerHTML={{ __html: buildThemeCss(theme) }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('reveal-ready')",
+          }}
+        />
       </head>
       <body className="font-sans">
         <JsonLd data={structuredData} />
+        <RevealObserver />
         {draft ? <LivePreviewListener serverURL={serverURL} /> : null}
         <BaseTemplate
           banner={draft ? <PreviewBanner /> : null}
@@ -97,6 +106,10 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
             links: resolveLinks(navigation.headerLinks),
             cta: resolveLink(navigation.cta),
             phone: site.phone,
+            hours: site.hoursSummary,
+            address: formatAddress(site),
+            mapsHref: mapsHref(site),
+            socials: site.socials,
           }}
           footer={{ site, links: resolveLinks(navigation.footerLinks) }}
         >

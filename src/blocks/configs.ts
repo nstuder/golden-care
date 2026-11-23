@@ -250,6 +250,16 @@ export const ContactBlock: Block = {
       defaultValue: true,
       admin: { description: 'Telefon, Adresse und Öffnungszeiten kommen aus den Einstellungen.' },
     },
+    {
+      name: 'showMapEmbed',
+      label: 'Google-Maps-Karte anzeigen',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: {
+        description:
+          'Die Karte lädt erst nach einem Klick (Datenschutz). Position: Koordinaten aus „SEO & Google“, sonst die Adresse.',
+      },
+    },
   ],
 }
 

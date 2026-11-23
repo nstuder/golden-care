@@ -1,6 +1,7 @@
 import { Button, Container, Heading, Icon, Text } from '@/components/atoms'
 import { cn } from '@/lib/cn'
 import type { ResolvedLink } from '@/lib/links'
+import { reveal } from '@/lib/reveal'
 
 export type CallToActionProps = {
   heading: string
@@ -30,7 +31,10 @@ export function CallToAction({ heading, text, links = [], tone = 'gold' }: CallT
               dark ? 'text-white/5' : 'text-secondary-900/10',
             )}
           />
-          <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-5">
+          <div
+            {...reveal('zoom')}
+            className="relative mx-auto flex max-w-2xl flex-col items-center gap-5"
+          >
             <Heading
               level={2}
               size={3}

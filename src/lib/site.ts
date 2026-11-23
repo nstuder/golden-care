@@ -1,7 +1,7 @@
 import type { SocialLink } from '@/components/molecules/SocialLinks'
 import type { OpeningHoursEntry } from '@/components/molecules/OpeningHours'
 
-import { formatSchedule, normalizeSchedule, type ScheduleEntry } from './hours'
+import { formatSchedule, formatScheduleShort, normalizeSchedule, type ScheduleEntry } from './hours'
 import { toImage, type ImageData } from './media'
 
 /** Business details as used by the frontend (from the "Einstellungen" global). */
@@ -24,6 +24,8 @@ export type SiteInfo = {
   schedule?: ScheduleEntry[] | null
   /** Display rows derived from `schedule` */
   openingHours?: OpeningHoursEntry[] | null
+  /** One-line summary, e.g. for the header */
+  hoursSummary?: string | null
   appointmentNote?: string | null
   socials?: SocialLink[] | null
   mapsUrl?: string | null
@@ -72,6 +74,7 @@ export function toSiteInfo(input?: object | null): SiteInfo {
     priceRange: str(settings.priceRange),
     schedule,
     openingHours: formatSchedule(schedule),
+    hoursSummary: formatScheduleShort(schedule) || null,
     areaServed: (settings.areaServed ?? [])
       .map((a) => str(a?.name))
       .filter((a): a is string => Boolean(a)),
@@ -86,6 +89,14 @@ export function formatAddress(site: SiteInfo): string | null {
   const cityLine = [site.zip, site.city].filter(Boolean).join(' ')
   const parts = [site.street, cityLine].filter(Boolean)
   return parts.length ? parts.join(', ') : null
+}
+
+/** Google Maps embed (no API key needed): uses the coordinates if set, otherwise the address */
+export function mapsEmbedSrc(site: SiteInfo): string | null {
+  const hasCoords = typeof site.latitude === 'number' && typeof site.longitude === 'number'
+  const query = hasCoords ? `${site.latitude},${site.longitude}` : formatAddress(site)
+  if (!query) return null
+  return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=15&hl=de&output=embed`
 }
 
 export function mapsHref(site: SiteInfo): string | null {

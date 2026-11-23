@@ -20,13 +20,13 @@ export function Hero({ eyebrow, heading, text, image, links = [], size = 'large'
         size === 'large' ? 'min-h-[80svh] items-center' : 'min-h-[45svh] items-end',
       )}
     >
-      <Picture image={image} priority className="-z-20" />
+      <Picture image={image} priority className="-z-20" imgClassName="hero-zoom" />
       <div
         aria-hidden
         className="absolute inset-0 -z-10 bg-gradient-to-r from-secondary-900/95 via-secondary-800/75 to-secondary-700/20"
       />
       <Container width="wide" className={cn('py-20', size === 'compact' && 'pt-32 pb-14')}>
-        <div className="flex max-w-2xl flex-col gap-6">
+        <div className="hero-enter flex max-w-2xl flex-col gap-6">
           {eyebrow ? <Eyebrow className="text-primary-400">{eyebrow}</Eyebrow> : null}
           <Heading level={1} inverted size={size === 'large' ? 1 : 2}>
             {heading}

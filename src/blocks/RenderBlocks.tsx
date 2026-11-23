@@ -162,6 +162,7 @@ function renderBlock(block: PageBlock, context: BlockContext) {
           intro={block.intro}
           site={context.site}
           showMap={block.showMap ?? true}
+          showMapEmbed={block.showMapEmbed ?? true}
         />
       )
     case 'formBlock': {

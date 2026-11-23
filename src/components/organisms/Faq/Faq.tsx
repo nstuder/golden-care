@@ -1,5 +1,6 @@
 import { Container, Section } from '@/components/atoms'
 import { FaqItem, SectionHeader } from '@/components/molecules'
+import { reveal } from '@/lib/reveal'
 
 export type FaqProps = {
   eyebrow?: string | null
@@ -15,7 +16,7 @@ export function Faq({ eyebrow, heading, intro, items }: FaqProps) {
     <Section tone="light">
       <Container width="narrow" className="flex flex-col gap-10">
         <SectionHeader eyebrow={eyebrow} heading={heading} intro={intro} />
-        <div className="flex flex-col gap-3">
+        <div {...reveal()} className="flex flex-col gap-3">
           {items.map((item, index) => (
             <FaqItem
               key={item.id ?? index}

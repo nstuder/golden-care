@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Container, Icon, Section } from '@/components/atoms'
 import { SectionHeader } from '@/components/molecules'
 import type { ImageData } from '@/lib/media'
+import { reveal } from '@/lib/reveal'
 
 export type GalleryImage = ImageData & { id: string; caption?: string | null }
 
@@ -63,6 +64,7 @@ export function Gallery({ eyebrow, heading, intro, images }: GalleryProps) {
           {images.map((image, index) => (
             <li
               key={image.id}
+              {...reveal('zoom', index, 60)}
               className={index % 5 === 0 ? 'md:col-span-2 md:row-span-2' : undefined}
             >
               <button

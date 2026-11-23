@@ -1,4 +1,4 @@
-import { fallbackSite, formatAddress, mapsHref, toSiteInfo } from './site'
+import { fallbackSite, formatAddress, mapsEmbedSrc, mapsHref, toSiteInfo } from './site'
 
 describe('site info', () => {
   it('falls back without settings', () => {
@@ -44,5 +44,25 @@ describe('site info', () => {
     expect(mapsHref({ ...site, mapsUrl: 'https://maps.example' })).toBe('https://maps.example')
     expect(formatAddress({ name: 'GC' })).toBeNull()
     expect(mapsHref({ name: 'GC' })).toBeNull()
+  })
+})
+
+describe('mapsEmbedSrc', () => {
+  it('prefers coordinates', () => {
+    expect(mapsEmbedSrc({ name: 'GC', latitude: 47.1, longitude: 8.5, street: 'X 1' })).toBe(
+      'https://maps.google.com/maps?q=47.1%2C8.5&z=15&hl=de&output=embed',
+    )
+  })
+
+  it('falls back to the address and needs one of both', () => {
+    expect(
+      mapsEmbedSrc({ name: 'GC', street: 'Musterstrasse 12', zip: '1234', city: 'Musterort' }),
+    ).toContain(`q=${encodeURIComponent('Musterstrasse 12, 1234 Musterort')}`)
+    expect(mapsEmbedSrc({ name: 'GC' })).toBeNull()
+  })
+
+  it('exposes a one-line opening hours summary', () => {
+    const site = toSiteInfo({ schedule: [{ days: ['sa'], opens: '09:00', closes: '14:00' }] })
+    expect(site.hoursSummary).toBe('Sa 09:00–14:00')
   })
 })

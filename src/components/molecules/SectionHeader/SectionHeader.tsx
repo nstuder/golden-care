@@ -1,5 +1,6 @@
 import { Eyebrow, Heading, Text } from '@/components/atoms'
 import { cn } from '@/lib/cn'
+import { reveal } from '@/lib/reveal'
 
 export type SectionHeaderProps = {
   eyebrow?: string | null
@@ -24,6 +25,7 @@ export function SectionHeader({
 
   return (
     <header
+      {...reveal()}
       className={cn(
         'flex max-w-3xl flex-col gap-4',
         align === 'center' && 'mx-auto items-center text-center',

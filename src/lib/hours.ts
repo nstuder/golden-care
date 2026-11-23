@@ -26,10 +26,14 @@ export function isValidTime(value: unknown): value is string {
 }
 
 const order = (day: Weekday) => weekdays.findIndex((d) => d.value === day)
-const label = (day: Weekday) => weekdays[order(day)].label
+const label = (day: Weekday, short = false) =>
+  short ? weekdays[order(day)].label.slice(0, 2) : weekdays[order(day)].label
 
-/** Sorts days and groups consecutive ones: [tu, we, th, fr] → "Dienstag – Freitag". */
-export function formatDays(days: Weekday[]): string {
+/**
+ * Sorts days and groups consecutive ones: [tu, we, th, fr] → "Dienstag – Freitag"
+ * (or "Di–Fr" with `short`).
+ */
+export function formatDays(days: Weekday[], { short = false } = {}): string {
   const sorted = [...new Set(days)].filter((d) => order(d) >= 0).sort((a, b) => order(a) - order(b))
   const groups: Weekday[][] = []
   for (const day of sorted) {
@@ -39,9 +43,11 @@ export function formatDays(days: Weekday[]): string {
   }
   return groups
     .map((group) => {
-      if (group.length === 1) return label(group[0])
-      if (group.length === 2) return `${label(group[0])} & ${label(group[1])}`
-      return `${label(group[0])} – ${label(group.at(-1)!)}`
+      const first = label(group[0], short)
+      const last = label(group.at(-1)!, short)
+      if (group.length === 1) return first
+      if (group.length === 2) return short ? `${first}, ${last}` : `${first} & ${last}`
+      return short ? `${first}–${last}` : `${first} – ${last}`
     })
     .join(', ')
 }
@@ -73,6 +79,15 @@ export function formatSchedule(
     if (closed.length) rows.push({ days: formatDays(closed), hours: 'geschlossen' })
   }
   return rows
+}
+
+/** One-line summary for tight spaces, e.g. "Di–Fr 08:30–18:00 · Sa 09:00–14:00". */
+export function formatScheduleShort(schedule: ScheduleEntry[]): string {
+  return schedule
+    .slice()
+    .sort((a, b) => Math.min(...a.days.map(order)) - Math.min(...b.days.map(order)))
+    .map((entry) => `${formatDays(entry.days, { short: true })} ${entry.opens}–${entry.closes}`)
+    .join(' · ')
 }
 
 const legacyDayNames: Record<string, Weekday> = Object.fromEntries(

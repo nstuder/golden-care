@@ -1,5 +1,6 @@
 import { Container, Section } from '@/components/atoms'
 import { FeatureItem, SectionHeader, type FeatureItemProps } from '@/components/molecules'
+import { reveal } from '@/lib/reveal'
 
 export type FeaturesProps = {
   eyebrow?: string | null
@@ -18,7 +19,7 @@ export function Features({ eyebrow, heading, intro, items, tone = 'light' }: Fea
         <SectionHeader eyebrow={eyebrow} heading={heading} intro={intro} inverted={inverted} />
         <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
           {items.map(({ id, ...item }, index) => (
-            <li key={id ?? index}>
+            <li key={id ?? index} {...reveal('up', index)}>
               <FeatureItem {...item} inverted={inverted} />
             </li>
           ))}

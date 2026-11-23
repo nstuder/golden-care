@@ -527,6 +527,10 @@ export interface ContactBlock {
    * Telefon, Adresse und Öffnungszeiten kommen aus den Einstellungen.
    */
   showMap?: boolean | null;
+  /**
+   * Die Karte lädt erst nach einem Klick (Datenschutz). Position: Koordinaten aus „SEO & Google“, sonst die Adresse.
+   */
+  showMapEmbed?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'contact';
@@ -1040,6 +1044,7 @@ export interface ContactBlockSelect<T extends boolean = true> {
   heading?: T;
   intro?: T;
   showMap?: T;
+  showMapEmbed?: T;
   id?: T;
   blockName?: T;
 }

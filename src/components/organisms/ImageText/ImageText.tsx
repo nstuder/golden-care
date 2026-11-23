@@ -4,6 +4,7 @@ import { Button, Container, Eyebrow, Heading, Picture, RichText, Section } from 
 import { cn } from '@/lib/cn'
 import type { ResolvedLink } from '@/lib/links'
 import type { ImageData } from '@/lib/media'
+import { reveal } from '@/lib/reveal'
 
 export type ImageTextProps = {
   eyebrow?: string | null
@@ -27,7 +28,10 @@ export function ImageText({
   return (
     <Section tone="light">
       <Container className="grid items-center gap-12 md:grid-cols-2 md:gap-16">
-        <div className={cn('relative', imagePosition === 'right' && 'md:order-2')}>
+        <div
+          {...reveal(imagePosition === 'right' ? 'right' : 'left')}
+          className={cn('relative', imagePosition === 'right' && 'md:order-2')}
+        >
           <div
             aria-hidden
             className={cn(
@@ -41,7 +45,7 @@ export function ImageText({
             <Picture image={image} sizes="(min-width: 768px) 50vw, 100vw" />
           </div>
         </div>
-        <div className="flex flex-col gap-5">
+        <div {...reveal('up', 1)} className="flex flex-col gap-5">
           {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
           {heading ? <Heading level={2}>{heading}</Heading> : null}
           {heading ? <span aria-hidden className="h-1 w-16 rounded-full bg-primary-500" /> : null}

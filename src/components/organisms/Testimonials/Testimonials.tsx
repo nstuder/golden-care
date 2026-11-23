@@ -1,5 +1,6 @@
 import { Container, Section } from '@/components/atoms'
 import { SectionHeader, TestimonialCard, type TestimonialCardProps } from '@/components/molecules'
+import { reveal } from '@/lib/reveal'
 
 export type TestimonialsProps = {
   eyebrow?: string | null
@@ -20,8 +21,8 @@ export function Testimonials({ eyebrow, heading, intro, items }: TestimonialsPro
       <Container className="relative flex flex-col gap-12">
         <SectionHeader eyebrow={eyebrow} heading={heading} intro={intro} inverted />
         <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {items.map(({ id, ...item }) => (
-            <li key={id}>
+          {items.map(({ id, ...item }, index) => (
+            <li key={id} {...reveal('up', index)}>
               <TestimonialCard {...item} />
             </li>
           ))}

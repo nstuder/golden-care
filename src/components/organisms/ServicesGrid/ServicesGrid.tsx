@@ -1,6 +1,7 @@
 import { Button, Container, Section, type SectionTone } from '@/components/atoms'
 import { SectionHeader, ServiceCard, type ServiceCardProps } from '@/components/molecules'
 import type { ResolvedLink } from '@/lib/links'
+import { reveal } from '@/lib/reveal'
 
 export type ServicesGridProps = {
   eyebrow?: string | null
@@ -27,8 +28,8 @@ export function ServicesGrid({
         <SectionHeader eyebrow={eyebrow} heading={heading} intro={intro} />
         {services.length ? (
           <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map(({ id, image, ...service }) => (
-              <li key={id}>
+            {services.map(({ id, image, ...service }, index) => (
+              <li key={id} {...reveal('up', index)}>
                 <ServiceCard {...service} image={showImages ? (image ?? null) : undefined} />
               </li>
             ))}

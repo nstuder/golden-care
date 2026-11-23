@@ -1,6 +1,7 @@
 import {
   formatDays,
   formatSchedule,
+  formatScheduleShort,
   isValidTime,
   normalizeSchedule,
   parseLegacyHours,
@@ -79,5 +80,23 @@ describe('parseLegacyHours', () => {
     expect(parseLegacyHours('Sonntag & Montag', 'geschlossen')).toBeNull()
     expect(parseLegacyHours('Feiertage', '10:00 – 12:00')).toBeNull()
     expect(parseLegacyHours(null, '10:00 – 12:00')).toBeNull()
+  })
+})
+
+describe('short formats', () => {
+  it('abbreviates days', () => {
+    expect(formatDays(['tu', 'we', 'th', 'fr'], { short: true })).toBe('Di–Fr')
+    expect(formatDays(['sa', 'su'], { short: true })).toBe('Sa, So')
+    expect(formatDays(['mo'], { short: true })).toBe('Mo')
+  })
+
+  it('summarises the schedule in one line', () => {
+    expect(
+      formatScheduleShort([
+        { days: ['sa'], opens: '09:00', closes: '14:00' },
+        { days: ['tu', 'we', 'th', 'fr'], opens: '08:30', closes: '18:00' },
+      ]),
+    ).toBe('Di–Fr 08:30–18:00 · Sa 09:00–14:00')
+    expect(formatScheduleShort([])).toBe('')
   })
 })
