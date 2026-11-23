@@ -28,7 +28,7 @@ describe('site info', () => {
       { days: 'Montag', hours: '09:00 – 12:00' },
       { days: 'Dienstag – Sonntag', hours: 'geschlossen' },
     ])
-    expect(site.country).toBe('CH')
+    expect(site.country).toBe('DE')
     expect(site.latitude).toBe(46.9)
     expect(site.longitude).toBeNull()
     expect(site.areaServed).toEqual(['Bern'])
@@ -36,10 +36,10 @@ describe('site info', () => {
   })
 
   it('formats the address and map link', () => {
-    const site = { name: 'GC', street: 'Musterstrasse 12', zip: '1234', city: 'Musterort' }
-    expect(formatAddress(site)).toBe('Musterstrasse 12, 1234 Musterort')
+    const site = { name: 'GC', street: 'Musterstraße 12', zip: '1234', city: 'Musterort' }
+    expect(formatAddress(site)).toBe('Musterstraße 12, 1234 Musterort')
     expect(mapsHref(site)).toBe(
-      'https://www.google.com/maps/search/?api=1&query=Musterstrasse%2012%2C%201234%20Musterort',
+      'https://www.google.com/maps/search/?api=1&query=Musterstra%C3%9Fe%2012%2C%201234%20Musterort',
     )
     expect(mapsHref({ ...site, mapsUrl: 'https://maps.example' })).toBe('https://maps.example')
     expect(formatAddress({ name: 'GC' })).toBeNull()
@@ -56,8 +56,8 @@ describe('mapsEmbedSrc', () => {
 
   it('falls back to the address and needs one of both', () => {
     expect(
-      mapsEmbedSrc({ name: 'GC', street: 'Musterstrasse 12', zip: '1234', city: 'Musterort' }),
-    ).toContain(`q=${encodeURIComponent('Musterstrasse 12, 1234 Musterort')}`)
+      mapsEmbedSrc({ name: 'GC', street: 'Musterstraße 12', zip: '1234', city: 'Musterort' }),
+    ).toContain(`q=${encodeURIComponent('Musterstraße 12, 1234 Musterort')}`)
     expect(mapsEmbedSrc({ name: 'GC' })).toBeNull()
   })
 

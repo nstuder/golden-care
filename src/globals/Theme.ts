@@ -44,7 +44,7 @@ export const Theme: GlobalConfig = {
       type: 'row',
       fields: [
         colorField('background', 'Hintergrund', 'Seitenhintergrund'),
-        colorField('foreground', 'Textfarbe', 'Fliesstext und Überschriften'),
+        colorField('foreground', 'Textfarbe', 'Fließtext und Überschriften'),
       ],
     },
     {

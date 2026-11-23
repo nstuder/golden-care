@@ -49,7 +49,7 @@ Technisch: `/next/preview` aktiviert für eingeloggte Benutzer den Next.js Draft
   `WebSite`, pro Seite `WebPage`/`ContactPage`/`CollectionPage`, `BreadcrumbList` und `FAQPage` (aus FAQ-Abschnitten).
   Prüfen mit dem [Rich Results Test](https://search.google.com/test/rich-results) oder dem [Schema Validator](https://validator.schema.org/).
 - **Metadaten** – `src/lib/seo/metadata.ts`: Titel, Beschreibung (SEO-Feld → Hero-Text → Einstellungen),
-  Canonical, Open Graph/Twitter-Bild (SEO-Bild → Hero-Bild → Standardbild), `lang="de-CH"`, Theme-Farbe.
+  Canonical, Open Graph/Twitter-Bild (SEO-Bild → Hero-Bild → Standardbild), `lang="de-DE"`, Theme-Farbe.
 - **Pro Seite** im Bereich „SEO“: Titel, Beschreibung, Bild (mit „Generieren“-Vorschlägen) und „noindex“.
 - **Sitemap** (`/sitemap.xml`, ohne noindex-Seiten), **robots.txt**, Favicon/Apple-Icon, `logo.png`, Web-Manifest.
 - **Indexierung** erst mit `ALLOW_INDEXING=true` (robots.txt + `<meta name="robots">`).

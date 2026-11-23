@@ -78,11 +78,11 @@ describe('ContactItem', () => {
   it('renders plain text without href', () => {
     render(
       <ContactItem icon="map-pin" label="Adresse">
-        Musterstrasse
+        Musterstraße
       </ContactItem>,
     )
     expect(screen.queryByRole('link')).not.toBeInTheDocument()
-    expect(screen.getByText('Musterstrasse')).toBeInTheDocument()
+    expect(screen.getByText('Musterstraße')).toBeInTheDocument()
   })
 })
 

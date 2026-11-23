@@ -9,7 +9,7 @@ const site = {
   phone: '+41 79 123 45 67',
   whatsapp: '+41 79 123 45 67',
   email: 'hallo@golden-care.ch',
-  street: 'Musterstrasse 12',
+  street: 'Musterstraße 12',
   zip: '1234',
   city: 'Musterort',
   openingHours: [{ days: 'Samstag', hours: '9–14' }],

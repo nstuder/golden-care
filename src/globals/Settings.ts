@@ -56,13 +56,13 @@ export const Settings: GlobalConfig = {
                   admin: {
                     width: '50%',
                     description:
-                      'Am besten mit Ländervorwahl (+41 …). Leer lassen, um WhatsApp auszublenden.',
+                      'Am besten mit Ländervorwahl (+49 …). Leer lassen, um WhatsApp auszublenden.',
                   },
                 },
               ],
             },
             { name: 'email', label: 'E-Mail', type: 'email' },
-            { name: 'street', label: 'Strasse & Nr.', type: 'text' },
+            { name: 'street', label: 'Straße & Nr.', type: 'text' },
             {
               type: 'row',
               fields: [
@@ -138,7 +138,7 @@ export const Settings: GlobalConfig = {
                       admin: { width: '50%', placeholder: '08:30' },
                     },
                     {
-                      ...timeField('closes', 'Schliesst'),
+                      ...timeField('closes', 'Schließt'),
                       admin: { width: '50%', placeholder: '18:00' },
                     },
                   ],
@@ -182,13 +182,13 @@ export const Settings: GlobalConfig = {
                   name: 'region',
                   label: 'Kanton / Region',
                   type: 'text',
-                  admin: { width: '50%', placeholder: 'z.B. BE' },
+                  admin: { width: '50%', placeholder: 'z.B. BW' },
                 },
                 {
                   name: 'country',
                   label: 'Land (ISO-Code)',
                   type: 'text',
-                  defaultValue: 'CH',
+                  defaultValue: 'DE',
                   admin: { width: '50%' },
                 },
               ],
@@ -233,7 +233,7 @@ export const Settings: GlobalConfig = {
               name: 'priceRange',
               label: 'Preisniveau',
               type: 'text',
-              admin: { description: 'Optional, z.B. „$$“ oder „CHF 60–150“' },
+              admin: { description: 'Optional, z.B. „$$“ oder „60–150 €“' },
             },
           ],
         },

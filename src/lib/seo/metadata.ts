@@ -90,7 +90,7 @@ export function buildPageMetadata({
     robots: index ? { index: true, follow: true } : { index: false, follow: false },
     openGraph: {
       type: 'website',
-      locale: 'de_CH',
+      locale: 'de_DE',
       siteName: site.name,
       url: absoluteUrl(baseUrl, path),
       title,

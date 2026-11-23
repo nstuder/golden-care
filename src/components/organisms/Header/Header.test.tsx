@@ -15,7 +15,7 @@ const props = {
   cta: { href: '/kontakt#form', label: 'Termin vereinbaren', newTab: false },
   phone: '+41 79 123 45 67',
   hours: 'Di–Fr 08:30–18:00',
-  address: 'Musterstrasse 12, 1234 Musterort',
+  address: 'Musterstraße 12, 1234 Musterort',
   mapsHref: 'https://maps.example',
   socials: [{ platform: 'instagram', url: 'https://instagram.com/x' }],
 }
@@ -42,7 +42,7 @@ describe('Header', () => {
   it('shows opening hours, address and socials in the top bar', () => {
     render(<Header {...props} />)
     expect(screen.getByText('Di–Fr 08:30–18:00')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /Musterstrasse 12/ })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Musterstraße 12/ })).toHaveAttribute(
       'href',
       'https://maps.example',
     )
@@ -77,7 +77,7 @@ describe('Header', () => {
     expect(document.getElementById('mobile-menu')).not.toBeVisible()
 
     await user.click(toggle)
-    expect(screen.getByRole('button', { name: 'Menü schliessen' })).toHaveAttribute(
+    expect(screen.getByRole('button', { name: 'Menü schließen' })).toHaveAttribute(
       'aria-expanded',
       'true',
     )

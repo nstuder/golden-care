@@ -12,17 +12,17 @@ const images = [
 describe('Gallery', () => {
   it('renders a thumbnail button per image', () => {
     render(<Gallery heading="Galerie" images={images} />)
-    expect(screen.getAllByRole('button', { name: /Bild vergrössern/ })).toHaveLength(3)
+    expect(screen.getAllByRole('button', { name: /Bild vergrößern/ })).toHaveLength(3)
   })
 
   it('opens the lightbox and navigates with buttons and keys', async () => {
     const user = userEvent.setup()
     render(<Gallery images={images} />)
 
-    await user.click(screen.getByRole('button', { name: 'Bild vergrössern: Frisch gebadet' }))
+    await user.click(screen.getByRole('button', { name: 'Bild vergrößern: Frisch gebadet' }))
     const dialog = screen.getByRole('dialog', { name: 'Frisch gebadet' })
     expect(dialog).toHaveTextContent('1 / 3')
-    expect(screen.getByRole('button', { name: 'Schliessen' })).toHaveFocus()
+    expect(screen.getByRole('button', { name: 'Schließen' })).toHaveFocus()
 
     await user.click(screen.getByRole('button', { name: 'Nächstes Bild' }))
     expect(screen.getByRole('dialog', { name: 'Pudel' })).toHaveTextContent('2 / 3')

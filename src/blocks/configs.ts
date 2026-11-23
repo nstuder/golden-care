@@ -27,7 +27,7 @@ export const HeroBlock: Block = {
       type: 'select',
       defaultValue: 'large',
       options: [
-        { label: 'Gross (Startseite)', value: 'large' },
+        { label: 'Groß (Startseite)', value: 'large' },
         { label: 'Kompakt (Unterseite)', value: 'compact' },
       ],
     },
@@ -257,7 +257,7 @@ export const ContactBlock: Block = {
       defaultValue: true,
       admin: {
         description:
-          'Position: Koordinaten aus „SEO & Google“, sonst die Adresse. Google Maps ist in der Datenschutzerklärung erwähnt.',
+          'Die Karte lädt erst nach einem Klick (Datenschutz). Position: Koordinaten aus „SEO & Google“, sonst die Adresse.',
       },
     },
   ],

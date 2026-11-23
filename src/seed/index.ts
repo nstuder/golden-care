@@ -17,10 +17,10 @@ const link = ({ label, page, url, newTab }: LinkInput) =>
 const links = (...items: LinkInput[]) => items.map((item) => ({ link: link(item) }))
 
 const placeholder = {
-  phone: '+41 79 123 45 67',
-  email: 'hallo@golden-care.ch',
-  street: 'Musterstrasse 12',
-  zip: '1234',
+  phone: '+49 171 1234567',
+  email: 'hallo@golden-care.de',
+  street: 'Musterstraße 12',
+  zip: '12345',
   city: 'Musterort',
   owner: 'Anna Muster',
 }
@@ -326,7 +326,7 @@ export async function seed({
       {
         blockType: 'gallery',
         heading: 'Unsere Kundschaft',
-        intro: 'Klick auf ein Bild, um es gross anzusehen.',
+        intro: 'Klick auf ein Bild, um es groß anzusehen.',
         images: (
           [
             'beagle',
@@ -375,7 +375,7 @@ export async function seed({
         eyebrow: 'Hallo!',
         heading: `Ich bin ${placeholder.owner}`,
         content: richText(
-          'Seit meiner Kindheit begleiten mich Hunde – heute darf ich meine Leidenschaft zum Beruf machen. Als ausgebildete Hundecoiffeuse lege ich grossen Wert auf eine ruhige, stressfreie Behandlung.',
+          'Seit meiner Kindheit begleiten mich Hunde – heute darf ich meine Leidenschaft zum Beruf machen. Als ausgebildete Hundefriseurin lege ich großen Wert auf eine ruhige, stressfreie Behandlung.',
           'Jeder Hund ist anders: Darum nehme ich mir Zeit, lerne deinen Vierbeiner kennen und gehe auf seine Bedürfnisse, sein Fell und seine Haut ein.',
           {
             quote:
@@ -457,7 +457,7 @@ export async function seed({
         blockType: 'richText',
         content: richText(
           { h2: 'Wie setzt sich der Preis zusammen?' },
-          'Jeder Hund ist einzigartig – deshalb richtet sich der Preis nach **Grösse**, **Felltyp**, **Fellzustand** und dem **Temperament** deines Hundes. Gerne geben wir dir vorab eine unverbindliche Einschätzung.',
+          'Jeder Hund ist einzigartig – deshalb richtet sich der Preis nach **Größe**, **Felltyp**, **Fellzustand** und dem **Temperament** deines Hundes. Gerne geben wir dir vorab eine unverbindliche Einschätzung.',
           'Pfoten-, Krallen- und Ohrenpflege ist bei jeder Behandlung inklusive.',
         ),
       },
@@ -469,7 +469,7 @@ export async function seed({
           {
             question: 'Was kostet eine Behandlung?',
             answer:
-              'Der Preis hängt vom Aufwand ab: Grösse, Felltyp und -zustand sowie das Temperament spielen eine Rolle. Für stark verfilztes Fell kann ein Zuschlag anfallen. Ruf uns an – wir beraten dich gerne.',
+              'Der Preis hängt vom Aufwand ab: Größe, Felltyp und -zustand sowie das Temperament spielen eine Rolle. Für stark verfilztes Fell kann ein Zuschlag anfallen. Ruf uns an – wir beraten dich gerne.',
           },
           {
             question: 'Wie lange dauert ein Termin?',
@@ -528,7 +528,7 @@ export async function seed({
         heading: 'Gesundes Fell beginnt mit Vertrauen',
         content: richText(
           'Bei Golden Care verbinden wir professionelle Fellpflege mit viel Geduld und Einfühlungsvermögen. Wir nehmen uns Zeit für jeden Hund – ganz ohne Stress.',
-          'Ob regelmässige Pflege, rassetypischer Schnitt oder eine Wellnessbehandlung: Wir achten dabei immer auch auf die Gesundheit von Haut, Ohren und Pfoten.',
+          'Ob regelmäßige Pflege, rassetypischer Schnitt oder eine Wellnessbehandlung: Wir achten dabei immer auch auf die Gesundheit von Haut, Ohren und Pfoten.',
         ),
         image: img.grooming,
         imagePosition: 'left',
@@ -607,7 +607,7 @@ export async function seed({
       socials: [{ platform: 'instagram', url: 'https://www.instagram.com/' }],
       businessType: 'LocalBusiness',
       image: img.heroHome,
-      country: 'CH',
+      country: 'DE',
       areaServed: [{ name: placeholder.city }, { name: 'Umgebung' }],
     } as never,
   })

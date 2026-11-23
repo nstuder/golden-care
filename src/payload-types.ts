@@ -194,7 +194,7 @@ export interface HeroBlock {
           newTab?: boolean | null;
           reference?: (string | null) | Page;
           /**
-           * z.B. https://…, tel:+41…, mailto:… oder /kontakt#kontaktformular
+           * z.B. https://…, tel:+49…, mailto:… oder /kontakt#kontaktformular
            */
           url?: string | null;
           label: string;
@@ -308,7 +308,7 @@ export interface ImageTextBlock {
     newTab?: boolean | null;
     reference?: (string | null) | Page;
     /**
-     * z.B. https://…, tel:+41…, mailto:… oder /kontakt#kontaktformular
+     * z.B. https://…, tel:+49…, mailto:… oder /kontakt#kontaktformular
      */
     url?: string | null;
     label?: string | null;
@@ -334,7 +334,7 @@ export interface ServicesGridBlock {
     newTab?: boolean | null;
     reference?: (string | null) | Page;
     /**
-     * z.B. https://…, tel:+41…, mailto:… oder /kontakt#kontaktformular
+     * z.B. https://…, tel:+49…, mailto:… oder /kontakt#kontaktformular
      */
     url?: string | null;
     label?: string | null;
@@ -503,7 +503,7 @@ export interface CallToActionBlock {
           newTab?: boolean | null;
           reference?: (string | null) | Page;
           /**
-           * z.B. https://…, tel:+41…, mailto:… oder /kontakt#kontaktformular
+           * z.B. https://…, tel:+49…, mailto:… oder /kontakt#kontaktformular
            */
           url?: string | null;
           label: string;
@@ -528,7 +528,7 @@ export interface ContactBlock {
    */
   showMap?: boolean | null;
   /**
-   * Position: Koordinaten aus „SEO & Google“, sonst die Adresse. Google Maps ist in der Datenschutzerklärung erwähnt.
+   * Die Karte lädt erst nach einem Klick (Datenschutz). Position: Koordinaten aus „SEO & Google“, sonst die Adresse.
    */
   showMapEmbed?: boolean | null;
   id?: string | null;
@@ -1330,7 +1330,7 @@ export interface Setting {
   owner?: string | null;
   phone?: string | null;
   /**
-   * Leer lassen, um WhatsApp auszublenden
+   * Am besten mit Ländervorwahl (+49 …). Leer lassen, um WhatsApp auszublenden.
    */
   whatsapp?: string | null;
   email?: string | null;
@@ -1382,7 +1382,7 @@ export interface Setting {
       }[]
     | null;
   /**
-   * Optional, z.B. „$$“ oder „CHF 60–150“
+   * Optional, z.B. „$$“ oder „60–150 €“
    */
   priceRange?: string | null;
   updatedAt?: string | null;
@@ -1401,7 +1401,7 @@ export interface Navigation {
           newTab?: boolean | null;
           reference?: (string | null) | Page;
           /**
-           * z.B. https://…, tel:+41…, mailto:… oder /kontakt#kontaktformular
+           * z.B. https://…, tel:+49…, mailto:… oder /kontakt#kontaktformular
            */
           url?: string | null;
           label: string;
@@ -1417,7 +1417,7 @@ export interface Navigation {
     newTab?: boolean | null;
     reference?: (string | null) | Page;
     /**
-     * z.B. https://…, tel:+41…, mailto:… oder /kontakt#kontaktformular
+     * z.B. https://…, tel:+49…, mailto:… oder /kontakt#kontaktformular
      */
     url?: string | null;
     label?: string | null;
@@ -1429,7 +1429,7 @@ export interface Navigation {
           newTab?: boolean | null;
           reference?: (string | null) | Page;
           /**
-           * z.B. https://…, tel:+41…, mailto:… oder /kontakt#kontaktformular
+           * z.B. https://…, tel:+49…, mailto:… oder /kontakt#kontaktformular
            */
           url?: string | null;
           label: string;
@@ -1461,7 +1461,7 @@ export interface Theme {
    */
   background: string;
   /**
-   * Fliesstext und Überschriften
+   * Fließtext und Überschriften
    */
   foreground: string;
   headingFont: 'fraunces' | 'playfair' | 'cormorant';

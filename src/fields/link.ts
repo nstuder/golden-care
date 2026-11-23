@@ -57,7 +57,7 @@ export function linkField({
             required,
             admin: {
               condition: (_, sibling) => sibling?.type === 'custom',
-              description: 'z.B. https://…, tel:+41…, mailto:… oder /kontakt#kontaktformular',
+              description: 'z.B. https://…, tel:+49…, mailto:… oder /kontakt#kontaktformular',
               width: '50%',
             },
           },

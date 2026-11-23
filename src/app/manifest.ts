@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Golden Care – Salon für Hundegesundheit und Fellpflege',
     short_name: 'Golden Care',
     description: 'Liebevolle, fachgerechte Fellpflege und Wellness für Hunde.',
-    lang: 'de-CH',
+    lang: 'de-DE',
     start_url: '/',
     display: 'browser',
     background_color: '#fbf8f3',

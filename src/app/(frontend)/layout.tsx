@@ -51,7 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
     applicationName: site.name,
     authors: site.owner ? [{ name: site.owner }] : undefined,
     robots: index ? { index: true, follow: true } : { index: false, follow: false },
-    openGraph: { siteName: site.name, locale: 'de_CH', type: 'website' },
+    openGraph: { siteName: site.name, locale: 'de_DE', type: 'website' },
   }
 }
 
@@ -81,7 +81,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   return (
     <html
-      lang="de-CH"
+      lang="de-DE"
       // The inline script below adds `reveal-ready` before hydration
       suppressHydrationWarning
       className={`${inter.variable} ${marcellus.variable} ${fraunces.variable} ${playfair.variable} ${cormorant.variable}`}

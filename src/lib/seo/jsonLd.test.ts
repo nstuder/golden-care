@@ -18,7 +18,7 @@ const site: SiteInfo = {
   tagline: 'Salon für Hundegesundheit und Fellpflege',
   description: 'Liebevolle Fellpflege',
   owner: 'Anna Muster',
-  street: 'Musterstrasse 12',
+  street: 'Musterstraße 12',
   zip: '1234',
   city: 'Musterort',
   region: 'BE',
@@ -93,7 +93,7 @@ describe('buildLocalBusiness', () => {
       founder: { '@type': 'Person', name: 'Anna Muster' },
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Musterstrasse 12',
+        streetAddress: 'Musterstraße 12',
         postalCode: '1234',
         addressLocality: 'Musterort',
         addressRegion: 'BE',
@@ -165,7 +165,7 @@ describe('website and page nodes', () => {
     expect(buildWebSite({ site, baseUrl: base })).toMatchObject({
       '@type': 'WebSite',
       '@id': `${base}/#website`,
-      inLanguage: 'de-CH',
+      inLanguage: 'de-DE',
       publisher: { '@id': `${base}/#business` },
     })
   })

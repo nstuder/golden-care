@@ -24,10 +24,10 @@ export const seedImages = {
   bath: { id: '1530281700549-e82e7bf110d6', alt: 'Nasser Hund rennt fröhlich aus dem Wasser' },
   haircut: {
     id: '1534361960057-19889db9621e',
-    alt: 'Frisch geschnittener weisser Pudel rennt über die Wiese',
+    alt: 'Frisch geschnittener weißer Pudel rennt über die Wiese',
   },
   trimming: { id: '1625316708582-7c38734be31d', alt: 'Zwergschnauzer mit frisch getrimmtem Bart' },
-  undercoat: { id: '1529429617124-95b109e86bb8', alt: 'Samojede mit dichtem, weissem Fell' },
+  undercoat: { id: '1529429617124-95b109e86bb8', alt: 'Samojede mit dichtem, weißem Fell' },
   paws: {
     id: '1561037404-61cd46aa615b',
     alt: 'Jack Russell Terrier sitzt aufmerksam vor rosa Hintergrund',
@@ -35,7 +35,7 @@ export const seedImages = {
   puppy: { id: '1507146426996-ef05306b995a', alt: 'Golden-Retriever-Welpe mit rotem Halsband' },
   wellness: {
     id: '1587300003388-59208cc962cb',
-    alt: 'Australian Shepherd geniesst den Tag am Strand',
+    alt: 'Australian Shepherd genießt den Tag am Strand',
   },
   beagle: { id: '1543466835-00a7907e9de1', alt: 'Lachender Beagle' },
   pug: { id: '1517849845537-4d257902454a', alt: 'Schwarzer Mops vor gelbem Hintergrund' },
@@ -48,7 +48,7 @@ export const seedImages = {
   goldenFlower: { id: '1552053831-71594a27632d', alt: 'Golden Retriever mit einer Blume im Maul' },
   happyMix: {
     id: '1477884213360-7e9d7dcc1e48',
-    alt: 'Fröhlicher schwarz-weisser Hund auf dem Gehweg',
+    alt: 'Fröhlicher schwarz-weißer Hund auf dem Gehweg',
   },
   labrador: { id: '1518717758536-85ae29035b6d', alt: 'Brauner Labrador leckt sich die Nase' },
   fluffyPuppy: { id: '1600804340584-c7db2eacf0bf', alt: 'Flauschiger Welpe schaut nach oben' },

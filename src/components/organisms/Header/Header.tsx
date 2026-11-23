@@ -171,7 +171,7 @@ export function Header({
               className="flex size-11 items-center justify-center rounded-full text-white transition hover:bg-white/10 lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-menu"
-              aria-label={open ? 'Menü schliessen' : 'Menü öffnen'}
+              aria-label={open ? 'Menü schließen' : 'Menü öffnen'}
               onClick={() => setOpen(!open)}
             >
               <Icon name={open ? 'close' : 'menu'} />

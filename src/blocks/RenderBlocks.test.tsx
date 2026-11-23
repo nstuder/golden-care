@@ -114,7 +114,7 @@ describe('RenderBlocks', () => {
 
   it('skips gallery items without populated image', () => {
     render(<RenderBlocks blocks={blocks} context={context} />)
-    expect(screen.getAllByRole('button', { name: /Bild vergrössern/ })).toHaveLength(1)
+    expect(screen.getAllByRole('button', { name: /Bild vergrößern/ })).toHaveLength(1)
   })
 
   it('renders nothing without blocks', () => {

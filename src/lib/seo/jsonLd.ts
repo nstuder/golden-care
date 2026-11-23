@@ -109,7 +109,7 @@ export function buildLocalBusiness({
           postalCode: site.zip,
           addressLocality: site.city,
           addressRegion: site.region,
-          addressCountry: site.country ?? 'CH',
+          addressCountry: site.country ?? 'DE',
         }
       : undefined,
     geo: hasGeo
@@ -144,7 +144,7 @@ export function buildWebSite({ site, baseUrl }: { site: SiteInfo; baseUrl: strin
     url: absoluteUrl(baseUrl, '/'),
     name: site.name,
     description: site.description ?? site.tagline,
-    inLanguage: 'de-CH',
+    inLanguage: 'de-DE',
     publisher: { '@id': ids.business(baseUrl) },
   })
 }
@@ -177,7 +177,7 @@ export function buildWebPage({
     url,
     name,
     description,
-    inLanguage: 'de-CH',
+    inLanguage: 'de-DE',
     isPartOf: { '@id': ids.website(baseUrl) },
     about: { '@id': ids.business(baseUrl) },
     primaryImageOfPage: imageUrl

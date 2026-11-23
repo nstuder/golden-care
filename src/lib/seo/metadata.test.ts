@@ -56,7 +56,7 @@ describe('buildPageMetadata', () => {
     expect(metadata.robots).toEqual({ index: true, follow: true })
     expect(metadata.openGraph).toMatchObject({
       url: `${base}/leistungen`,
-      locale: 'de_CH',
+      locale: 'de_DE',
       siteName: 'Golden Care',
       images: [{ url: `${base}/api/media/file/hero.jpg`, width: 1920, height: 1280, alt: 'Hero' }],
     })

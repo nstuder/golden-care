@@ -73,7 +73,7 @@ export function Gallery({ eyebrow, heading, intro, images }: GalleryProps) {
                   triggerRefs.current[index] = el
                 }}
                 onClick={() => setCurrent(index)}
-                aria-label={`Bild vergrössern: ${image.caption || image.alt}`}
+                aria-label={`Bild vergrößern: ${image.caption || image.alt}`}
                 className="group relative block aspect-square w-full overflow-hidden rounded-theme-sm bg-secondary-100"
               >
                 <Image
@@ -102,7 +102,7 @@ export function Gallery({ eyebrow, heading, intro, images }: GalleryProps) {
             ref={closeRef}
             type="button"
             onClick={close}
-            aria-label="Schliessen"
+            aria-label="Schließen"
             className="absolute top-4 right-4 flex size-12 items-center justify-center rounded-full text-white hover:bg-white/10"
           >
             <Icon name="close" />

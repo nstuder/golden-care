@@ -63,7 +63,7 @@ export function toSiteInfo(input?: object | null): SiteInfo {
     zip: str(settings.zip),
     city: str(settings.city),
     region: str(settings.region),
-    country: str(settings.country) ?? 'CH',
+    country: str(settings.country) ?? 'DE',
     latitude: num(settings.latitude),
     longitude: num(settings.longitude),
     phone: str(settings.phone),
