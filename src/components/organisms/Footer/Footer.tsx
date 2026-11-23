@@ -81,7 +81,11 @@ export function Footer({ site, links = [], year = new Date().getFullYear() }: Fo
               <ul className="flex gap-6">
                 {links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="transition hover:text-primary-300">
+                    <Link
+                      href={link.href}
+                      className="transition hover:text-primary-300"
+                      {...(link.newTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    >
                       {link.label}
                     </Link>
                   </li>

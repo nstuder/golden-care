@@ -53,7 +53,11 @@ export const Settings: GlobalConfig = {
                   name: 'whatsapp',
                   label: 'WhatsApp-Nummer',
                   type: 'text',
-                  admin: { width: '50%', description: 'Leer lassen, um WhatsApp auszublenden' },
+                  admin: {
+                    width: '50%',
+                    description:
+                      'Am besten mit Ländervorwahl (+41 …). Leer lassen, um WhatsApp auszublenden.',
+                  },
                 },
               ],
             },

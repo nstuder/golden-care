@@ -3,9 +3,10 @@
 import { TextField, useField } from '@payloadcms/ui'
 import type { TextFieldClientComponent } from 'payload'
 
-const HEX = /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i
+import { isHexColor } from '@/lib/theme'
 
-function toSixDigits(value: string) {
+function toSixDigits(raw: string) {
+  const value = raw.trim()
   if (value.length === 4) return `#${[...value.slice(1)].map((c) => c + c).join('')}`
   return value
 }
@@ -14,7 +15,7 @@ function toSixDigits(value: string) {
 export const ColorField: TextFieldClientComponent = (props) => {
   const { path } = props
   const { value, setValue } = useField<string>({ path })
-  const valid = typeof value === 'string' && HEX.test(value)
+  const valid = isHexColor(value)
 
   return (
     <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>

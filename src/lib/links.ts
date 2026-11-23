@@ -55,7 +55,16 @@ export function telHref(phone: string): string {
   return `tel:${phone.replace(/[^\d+]/g, '')}`
 }
 
-/** "+41 79 123 45 67" → "https://wa.me/41791234567" */
-export function whatsappHref(phone: string): string {
-  return `https://wa.me/${phone.replace(/\D/g, '')}`
+/**
+ * WhatsApp needs the international format without "+" or leading zeros:
+ * "+41 79 123 45 67" / "0041 79 …" / "079 123 45 67" → "https://wa.me/41791234567".
+ * Local numbers (leading 0) get the default country code (Switzerland).
+ */
+export function whatsappHref(phone: string, countryCode = '41'): string {
+  const trimmed = phone.trim()
+  let digits = trimmed.replace(/\D/g, '')
+  if (trimmed.startsWith('+')) return `https://wa.me/${digits}`
+  if (digits.startsWith('00')) digits = digits.slice(2)
+  else if (digits.startsWith('0')) digits = countryCode + digits.slice(1)
+  return `https://wa.me/${digits}`
 }

@@ -20,6 +20,7 @@ import { Theme } from './globals/Theme'
 import { pathForSlug } from './lib/links'
 import { truncate } from './lib/seo/metadata'
 import { migrations } from './migrations'
+import { serverURL } from './lib/env'
 import { revalidatePlugin } from './plugins/revalidate'
 import { seed } from './seed'
 
@@ -29,8 +30,6 @@ const heroBlock = (doc: { layout?: HeroLike[] | null } | undefined) =>
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-
-const serverURL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
 /** Without SMTP settings Payload logs e-mails to the console instead of sending them. */
 const email = process.env.SMTP_HOST

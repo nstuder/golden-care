@@ -20,7 +20,11 @@ export function generateStaticParams() {
 function slugFromParams(segments: string[] | undefined): string | null {
   if (!segments?.length) return HOME_SLUG
   if (segments.length > 1) return null
-  return decodeURIComponent(segments[0])
+  try {
+    return decodeURIComponent(segments[0])
+  } catch {
+    return null // malformed percent-encoding (e.g. "/100%") → 404 instead of a 500
+  }
 }
 
 export async function generateMetadata({ params }: PageProps<'/[[...slug]]'>): Promise<Metadata> {

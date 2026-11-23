@@ -1,13 +1,11 @@
 import type { GlobalConfig } from 'payload'
 
 import { anyone, authenticated } from '@/access'
-import { headingFonts, radii, themeDefaults } from '@/lib/theme'
+import { headingFonts, isHexColor, radii, themeDefaults } from '@/lib/theme'
 import { previewUrl } from '@/lib/preview'
 
 const hexValidate = (value: unknown) =>
-  typeof value === 'string' && /^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i.test(value.trim())
-    ? true
-    : 'Bitte eine Farbe im Format #RRGGBB eingeben.'
+  isHexColor(value) ? true : 'Bitte eine Farbe im Format #RRGGBB eingeben.'
 
 const colorField = (name: keyof typeof themeDefaults, label: string, description: string) => ({
   name,

@@ -11,9 +11,8 @@ export type ContactSectionProps = {
   site: SiteInfo
   /** "Route planen" button */
   showMap?: boolean
-  /** Embedded Google Maps (click to load) */
+  /** Embedded Google Maps */
   showMapEmbed?: boolean
-  privacyHref?: string | null
 }
 
 export function ContactSection({
@@ -23,7 +22,6 @@ export function ContactSection({
   site,
   showMap = true,
   showMapEmbed = true,
-  privacyHref = '/datenschutz',
 }: ContactSectionProps) {
   const address = formatAddress(site)
   const maps = mapsHref(site)
@@ -95,7 +93,6 @@ export function ContactSection({
             <MapEmbed
               src={embed}
               title={`Karte: ${[site.name, address].filter(Boolean).join(', ')}`}
-              privacyHref={privacyHref}
             />
           </div>
         ) : null}

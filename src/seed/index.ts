@@ -1,6 +1,7 @@
 import type { Payload } from 'payload'
 
 import { seedImages, unsplashUrl, type SeedImageKey } from './images'
+import { privacyPolicy } from './privacy'
 import { richText } from './richText'
 
 export type SeedResult = { seeded: boolean; message: string }
@@ -74,15 +75,16 @@ export async function seed({
     }
   }
 
+  // Download images first: if that fails, existing content must still be intact
+  payload.logger.info('Seed: lade Platzhalterbilder …')
+  const img = await ensureMedia(payload)
+
   if (force) {
     payload.logger.info('Seed: lösche bestehende Inhalte …')
     for (const collection of ['pages', 'services', 'testimonials', 'forms'] as const) {
       await payload.delete({ collection, where: { id: { exists: true } } })
     }
   }
-
-  payload.logger.info('Seed: lade Platzhalterbilder …')
-  const img = await ensureMedia(payload)
 
   // ── Leistungen ────────────────────────────────────────────────────────────
   payload.logger.info('Seed: erstelle Leistungen und Kundenstimmen …')
@@ -214,7 +216,7 @@ export async function seed({
       ],
       emails: [
         {
-          emailTo: placeholder.email,
+          // No emailTo: the form builder falls back to CONTACT_EMAIL (defaultToEmail)
           replyTo: '{{email}}',
           subject: 'Neue Anfrage von {{name}}',
           message: richText(
@@ -274,13 +276,7 @@ export async function seed({
       },
       {
         blockType: 'richText',
-        content: richText(
-          '**Platzhalter:** Bitte durch eine rechtlich geprüfte Datenschutzerklärung ersetzen.',
-          { h2: 'Kontaktformular' },
-          'Wenn du uns über das Kontaktformular schreibst, speichern wir deine Angaben ausschliesslich zur Bearbeitung deiner Anfrage.',
-          { h2: 'Server-Logfiles' },
-          'Beim Aufruf der Website werden technisch notwendige Daten (z.B. IP-Adresse, Zeitpunkt) kurzzeitig gespeichert.',
-        ),
+        content: richText(...privacyPolicy({ name: 'Golden Care', ...placeholder })),
       },
     ],
   })

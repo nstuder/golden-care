@@ -58,8 +58,9 @@ export function resolveTheme(input?: ThemeInput | null): Theme {
     secondary: color('secondary'),
     background: color('background'),
     foreground: color('foreground'),
-    headingFont: font && font in headingFonts ? (font as HeadingFont) : themeDefaults.headingFont,
-    radius: radius && radius in radii ? (radius as Radius) : themeDefaults.radius,
+    headingFont:
+      font && Object.hasOwn(headingFonts, font) ? (font as HeadingFont) : themeDefaults.headingFont,
+    radius: radius && Object.hasOwn(radii, radius) ? (radius as Radius) : themeDefaults.radius,
   }
 }
 

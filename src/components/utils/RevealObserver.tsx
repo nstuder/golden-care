@@ -25,7 +25,9 @@ export function RevealObserver() {
           intersection.unobserve(entry.target)
         }
       },
-      { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+      // threshold 0: very tall elements (e.g. a long privacy policy on mobile) could otherwise never
+      // reach a visible ratio and would stay hidden
+      { rootMargin: '0px 0px -8% 0px', threshold: 0 },
     )
 
     const observeAll = () =>

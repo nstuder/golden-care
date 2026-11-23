@@ -181,6 +181,14 @@
   }
 }
 
+/* Never print half-faded content */
+@media print {
+  .reveal-ready [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 @keyframes hero-rise {
   from {
     opacity: 0;

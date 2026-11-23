@@ -148,10 +148,13 @@ Organisms sind rein präsentational (Props rein, kein Payload‑Zugriff) → ein
 - [x] Logo nach Vorlage der Kundin: Golden Retriever im Trab, Lorbeerzweige, goldener Pinselring, Marcellus-Schrift (Vektor, `src/components/atoms/Logo`)
 - [x] Header-Logo (Hund + Wortmarke), rundes Logo im Footer, Favicon, Apple-Icon, `public/logo.png`
 - [x] ISR: Seiten werden beim ersten Aufruf gerendert und gecacht, Änderungen im CMS erneuern den Cache sofort (`src/plugins/revalidate.ts`)
-- [x] Kontakt: Google-Maps-Karte (lädt erst nach Klick, Datenschutz), abschaltbar im Kontakt-Abschnitt
+- [x] Kontakt: Google-Maps-Karte (lädt direkt), abschaltbar im Kontakt-Abschnitt
 - [x] Header: Infoleiste (Öffnungszeiten, Adresse, Telefon, Social), schrumpft beim Scrollen, goldene Linie, CTA mit Glanz-Effekt
 - [x] Scroll-Animationen mit IntersectionObserver (`data-reveal`, respektiert „reduzierte Bewegung“), Hero-Einstieg
-- [ ] Datenschutzerklärung um Google Maps ergänzen
+- [x] Datenschutzerklärung vollständig (Hosting, Kontakt, WhatsApp, Google Maps, Schriften, Cookies, Rechte), Migration ersetzt den Platzhalter
+- [x] Prettier in ESLint integriert (`eslint-plugin-prettier`, `eslint-config-prettier`), `pnpm format` / `format:check`
+- [x] Code-Review: sichere Preview-Redirects, Seed lädt Bilder vor dem Löschen, Kontaktformular an `CONTACT_EMAIL`, fehlerhafte URLs → 404, WhatsApp-Nummern normalisiert u.a.
+- [ ] Datenschutzerklärung rechtlich prüfen lassen
 
 ## 10. Umsetzungsschritte
 

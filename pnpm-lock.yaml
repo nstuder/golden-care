@@ -98,6 +98,12 @@ importers:
       eslint-config-next:
         specifier: 16.4.6
         version: 16.4.6(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.7.3))(eslint@9.39.5(jiti@2.7.0))(typescript@5.7.3)
+      eslint-config-prettier:
+        specifier: 10.1.8
+        version: 10.1.8(eslint@9.39.5(jiti@2.7.0))
+      eslint-plugin-prettier:
+        specifier: 5.5.7
+        version: 5.5.7(eslint-config-prettier@10.1.8(eslint@9.39.5(jiti@2.7.0)))(eslint@9.39.5(jiti@2.7.0))(prettier@3.10.1)
       jsdom:
         specifier: 31.0.1
         version: 31.0.1
@@ -320,6 +326,12 @@ packages:
       }
     peerDependencies:
       react: '>=16.8.0'
+
+  '@dual-bundle/import-meta-resolve@4.2.1':
+    resolution:
+      {
+        integrity: sha512-id+7YRUgoUX6CgV0DtuhirQWodeeA7Lf4i2x71JS/vtA5pRb/hIGWlw+G6MeXvsM+MXrz0VAydTGElX1rAfgPg==,
+      }
 
   '@emnapi/core@2.0.0-beta.2':
     resolution:
@@ -1907,6 +1919,13 @@ packages:
       {
         integrity: sha512-k2ENnmBugE/rzQfEcdWHcCY+/FM3VLzH9cYEsbdsoqrvzAKRhUZeRNhAZvB8OitQJ1TBed3yqWtdjzS6wJKBwg==,
       }
+
+  '@pkgr/core@0.3.6':
+    resolution:
+      {
+        integrity: sha512-SEeaJLb3qBNF/OaXnaR1NmmBbFYk1zC0ZH/52fATcRPLFg/p791YrcyFFy44Bo9sLaGuSuLp5Q6axbb/O+v/RA==,
+      }
+    engines: { node: ^14.18.0 || >=16.0.0 }
 
   '@preact/signals-core@1.14.5':
     resolution:
@@ -3590,6 +3609,15 @@ packages:
       typescript:
         optional: true
 
+  eslint-config-prettier@10.1.8:
+    resolution:
+      {
+        integrity: sha512-82GZUjRS0p/jganf6q1rEO25VSoHH0hKPCTrgillPjdI/3bgBhAE1QzHrHTizjpRvy6pGAvKjDJtk2pF9NDq8w==,
+      }
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
+
   eslint-import-resolver-node@0.3.10:
     resolution:
       {
@@ -3657,6 +3685,23 @@ packages:
     engines: { node: '>=4.0' }
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9
+
+  eslint-plugin-prettier@5.5.7:
+    resolution:
+      {
+        integrity: sha512-WjHyn3GrFd+ZR0rzsLiM4zJZ35PZMOE0SUIxzGmnWNG0126yNfJKJzObmmkYDwHJfGlkz3PSlzyG9ez/LJntwg==,
+      }
+    engines: { node: ^14.18.0 || >=16.0.0 }
+    peerDependencies:
+      '@types/eslint': '>=8.0.0'
+      eslint: '>=8.0.0'
+      eslint-config-prettier: '>= 7.0.0 <10.0.0 || >=10.1.0'
+      prettier: '>=3.0.0'
+    peerDependenciesMeta:
+      '@types/eslint':
+        optional: true
+      eslint-config-prettier:
+        optional: true
 
   eslint-plugin-react-hooks@7.1.1:
     resolution:
@@ -3788,6 +3833,12 @@ packages:
     resolution:
       {
         integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==,
+      }
+
+  fast-diff@1.3.0:
+    resolution:
+      {
+        integrity: sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==,
       }
 
   fast-glob@3.3.1:
@@ -5526,6 +5577,13 @@ packages:
       }
     engines: { node: '>= 0.8.0' }
 
+  prettier-linter-helpers@1.0.1:
+    resolution:
+      {
+        integrity: sha512-SxToR7P8Y2lWmv/kTzVLC1t/GDI2WGjMwNhLLE9qtH8Q13C+aEmuRlzDst4Up4s0Wc8sF2M+J57iB3cMLqftfg==,
+      }
+    engines: { node: '>=6.0.0' }
+
   prettier-plugin-tailwindcss@0.8.1:
     resolution:
       {
@@ -6204,6 +6262,13 @@ packages:
         integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==,
       }
     engines: { node: '>= 0.4' }
+
+  synckit@0.12.3:
+    resolution:
+      {
+        integrity: sha512-U+/AXT6LWsxnj2vz9HeUuPWBNgdWxjyIEjEPdbJARC9txmgPzo2VEdqnFo4hHaNyMPtycyVJrSaQYeQv/PoyyA==,
+      }
+    engines: { node: ^14.18.0 || >=16.0.0 }
 
   tabbable@6.5.2:
     resolution:
@@ -6957,6 +7022,8 @@ snapshots:
     dependencies:
       react: 19.2.9
       tslib: 2.9.1
+
+  '@dual-bundle/import-meta-resolve@4.2.1': {}
 
   '@emnapi/core@2.0.0-beta.2':
     dependencies:
@@ -7970,6 +8037,8 @@ snapshots:
 
   '@pinojs/redact@0.4.0': {}
 
+  '@pkgr/core@0.3.6': {}
+
   '@preact/signals-core@1.14.5': {}
 
   '@rolldown/binding-android-arm-eabi@1.2.19':
@@ -8981,6 +9050,10 @@ snapshots:
       - eslint-plugin-import-x
       - supports-color
 
+  eslint-config-prettier@10.1.8(eslint@9.39.5(jiti@2.7.0)):
+    dependencies:
+      eslint: 9.39.5(jiti@2.7.0)
+
   eslint-import-resolver-node@0.3.10:
     dependencies:
       debug: 3.2.7
@@ -9062,6 +9135,15 @@ snapshots:
       object.fromentries: 2.0.8
       safe-regex-test: 1.1.0
       string.prototype.includes: 2.0.1
+
+  eslint-plugin-prettier@5.5.7(eslint-config-prettier@10.1.8(eslint@9.39.5(jiti@2.7.0)))(eslint@9.39.5(jiti@2.7.0))(prettier@3.10.1):
+    dependencies:
+      eslint: 9.39.5(jiti@2.7.0)
+      prettier: 3.10.1
+      prettier-linter-helpers: 1.0.1
+      synckit: 0.12.3
+    optionalDependencies:
+      eslint-config-prettier: 10.1.8(eslint@9.39.5(jiti@2.7.0))
 
   eslint-plugin-react-hooks@7.1.1(eslint@9.39.5(jiti@2.7.0)):
     dependencies:
@@ -9182,6 +9264,8 @@ snapshots:
   fast-copy@3.1.0: {}
 
   fast-deep-equal@3.1.3: {}
+
+  fast-diff@1.3.0: {}
 
   fast-glob@3.3.1:
     dependencies:
@@ -10341,6 +10425,10 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
+  prettier-linter-helpers@1.0.1:
+    dependencies:
+      fast-diff: 1.3.0
+
   prettier-plugin-tailwindcss@0.8.1(prettier@3.10.1):
     dependencies:
       prettier: 3.10.1
@@ -10808,6 +10896,11 @@ snapshots:
       has-flag: 4.0.0
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  synckit@0.12.3:
+    dependencies:
+      '@dual-bundle/import-meta-resolve': 4.2.1
+      '@pkgr/core': 0.3.6
 
   tabbable@6.5.2: {}
 

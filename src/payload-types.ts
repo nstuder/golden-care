@@ -528,7 +528,7 @@ export interface ContactBlock {
    */
   showMap?: boolean | null;
   /**
-   * Die Karte lädt erst nach einem Klick (Datenschutz). Position: Koordinaten aus „SEO & Google“, sonst die Adresse.
+   * Position: Koordinaten aus „SEO & Google“, sonst die Adresse. Google Maps ist in der Datenschutzerklärung erwähnt.
    */
   showMapEmbed?: boolean | null;
   id?: string | null;

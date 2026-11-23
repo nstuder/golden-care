@@ -1,6 +1,7 @@
 import { defineConfig, globalIgnores } from 'eslint/config'
 import nextVitals from 'eslint-config-next/core-web-vitals'
 import nextTs from 'eslint-config-next/typescript'
+import prettierRecommended from 'eslint-plugin-prettier/recommended'
 
 export default defineConfig([
   ...nextVitals,
@@ -24,6 +25,9 @@ export default defineConfig([
       ],
     },
   },
+  // Runs Prettier as an ESLint rule and turns off all formatting rules that would conflict with it
+  // (eslint-config-prettier). Must stay after the other configs.
+  prettierRecommended,
   globalIgnores([
     '.next/**',
     'node_modules/**',

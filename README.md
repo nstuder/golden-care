@@ -67,6 +67,16 @@ Alle Seiten laufen über `src/app/(frontend)/[[...slug]]/page.tsx` mit Increment
 
 Sobald im CMS etwas veröffentlicht wird (Seiten, Leistungen, Kundenstimmen, Medien, Formulare, Einstellungen, Navigation, Design), leert `src/plugins/revalidate.ts` den Cache der ganzen Website. Zusätzlich wird jede Seite spätestens nach 24 Stunden neu gerendert. Die Live-Vorschau (Draft Mode) ist immer dynamisch.
 
+## Code-Stil
+
+Prettier formatiert den Code und läuft auch als ESLint-Regel (`eslint-plugin-prettier`, Konflikte abgeschaltet via `eslint-config-prettier`).
+
+```bash
+pnpm format        # alles formatieren
+pnpm format:check  # nur prüfen
+pnpm lint          # ESLint inkl. Prettier
+```
+
 ## Tests
 
 Vitest + Testing Library (`*.test.ts(x)` neben den Komponenten und Hilfsfunktionen):
