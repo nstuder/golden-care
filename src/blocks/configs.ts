@@ -244,20 +244,13 @@ export const ContactBlock: Block = {
   fields: [
     ...sectionHeaderFields(),
     {
-      name: 'showMap',
-      label: 'Button „Route planen“ anzeigen',
-      type: 'checkbox',
-      defaultValue: true,
-      admin: { description: 'Telefon, Adresse und Öffnungszeiten kommen aus den Einstellungen.' },
-    },
-    {
       name: 'showMapEmbed',
       label: 'Google-Maps-Karte anzeigen',
       type: 'checkbox',
       defaultValue: true,
       admin: {
         description:
-          'Die Karte lädt erst nach einem Klick (Datenschutz). Position: Koordinaten aus „SEO & Google“, sonst die Adresse.',
+          'Wird im Bereich „Anfahrt“ angezeigt und lädt erst nach einem Klick (Datenschutz). Position: Koordinaten aus „SEO & Google“, sonst die Adresse. Telefon, Adresse und Öffnungszeiten kommen aus den Einstellungen.',
       },
     },
   ],

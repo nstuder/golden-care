@@ -161,7 +161,6 @@ function renderBlock(block: PageBlock, context: BlockContext) {
           heading={block.heading}
           intro={block.intro}
           site={context.site}
-          showMap={block.showMap ?? true}
           showMapEmbed={block.showMapEmbed ?? true}
         />
       )

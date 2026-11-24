@@ -165,12 +165,7 @@ describe('ContactSection', () => {
       />,
     )
     expect(screen.getByRole('link', { name: /Telefon/ })).toHaveAttribute('href', 'tel:+411')
-    expect(screen.getByRole('link', { name: 'Route planen' })).toHaveAttribute('target', '_blank')
-    expect(screen.getByText('Weg 1')).toBeInTheDocument()
-  })
-
-  it('can hide the route button', () => {
-    render(<ContactSection site={{ name: 'GC', street: 'Weg 1' }} showMap={false} />)
+    expect(screen.getByRole('link', { name: /Weg 1/ })).toHaveAttribute('target', '_blank')
     expect(screen.queryByRole('link', { name: 'Route planen' })).not.toBeInTheDocument()
   })
 })

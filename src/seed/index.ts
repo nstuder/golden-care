@@ -299,7 +299,7 @@ export async function seed({
         heading: 'Kontakt & Öffnungszeiten',
         intro:
           'Termine vergeben wir nach Vereinbarung – so haben wir für jeden Hund genügend Zeit.',
-        showMap: true,
+        showMapEmbed: true,
       },
       {
         blockType: 'formBlock',

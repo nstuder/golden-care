@@ -1,14 +1,20 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 
 import { ContactSection } from './ContactSection'
 
 const site = { name: 'Golden Care', street: 'Musterstraße 12', zip: '1234', city: 'Musterort' }
 
 describe('ContactSection', () => {
-  it('shows the click-to-load map and the route button', () => {
+  it('shows the click-to-load map inside the address card', () => {
     render(<ContactSection heading="Kontakt" site={site} />)
-    expect(screen.getByRole('button', { name: 'Karte laden' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Route planen' })).toBeInTheDocument()
+    const card = screen.getByRole('heading', { name: 'Anfahrt' }).closest('div[data-reveal]')!
+    expect(
+      within(card as HTMLElement).getByRole('button', { name: 'Karte laden' }),
+    ).toBeInTheDocument()
+    expect(
+      within(card as HTMLElement).getByRole('link', { name: /Musterstraße 12/ }),
+    ).toHaveAttribute('href', expect.stringContaining('google.com/maps'))
+    expect(screen.queryByRole('link', { name: 'Route planen' })).not.toBeInTheDocument()
   })
 
   it('can hide the map', () => {

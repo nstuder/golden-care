@@ -148,7 +148,7 @@ Organisms sind rein präsentational (Props rein, kein Payload‑Zugriff) → ein
 - [x] Logo nach Vorlage der Kundin: Golden Retriever im Trab, Lorbeerzweige, goldener Pinselring, Marcellus-Schrift (Vektor, `src/components/atoms/Logo`)
 - [x] Header-Logo (Hund + Wortmarke), rundes Logo im Footer, Favicon, Apple-Icon, `public/logo.png`
 - [x] ISR: Seiten werden beim ersten Aufruf gerendert und gecacht, Änderungen im CMS erneuern den Cache sofort (`src/plugins/revalidate.ts`)
-- [x] Kontakt: Google-Maps-Karte, lädt erst nach Klick (Einwilligung nach DSGVO/TDDDG), abschaltbar im Kontakt-Abschnitt
+- [x] Kontakt: Google-Maps-Karte im Bereich „Anfahrt“ (ersetzt „Route planen“), lädt erst nach Klick (Einwilligung nach DSGVO/TDDDG), abschaltbar
 - [x] Header: Infoleiste (Öffnungszeiten, Adresse, Telefon, Social), schrumpft beim Scrollen, goldene Linie, CTA mit Glanz-Effekt
 - [x] Scroll-Animationen mit IntersectionObserver (`data-reveal`, respektiert „reduzierte Bewegung“), Hero-Einstieg
 - [x] Datenschutzerklärung nach DSGVO (Hosting, Kontakt, WhatsApp, Google Maps mit Einwilligung, Schriften, Cookies, Rechte), Migration ersetzt den generierten Text
